@@ -3,6 +3,26 @@
     "public": true,
     "routes": [
         {
+            "src": "/",
+            "dest": "/index.html"
+        },
+        {
+            "src": "/checkout",
+            "dest": "/checkout.html"
+        },
+        {
+            "src": "/checkout.html",
+            "dest": "/checkout.html"
+        },
+        {
+            "src": "/confirmation",
+            "dest": "/confirmation.html"
+        },
+        {
+            "src": "/confirmation.html",
+            "dest": "/confirmation.html"
+        },
+        {
             "src": "/css/(.*)",
             "dest": "/css/$1"
         },
@@ -16,7 +36,7 @@
         },
         {
             "src": "/(.*)",
-            "dest": "/"
+            "dest": "/$1"
         }
     ]
 }
