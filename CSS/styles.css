@@ -1129,3 +1129,32 @@ body.dark-mode .footer {
         padding: 30px 20px;
     }
 }
+
+/* Estilo diferenciado para VitaStock */
+.vitastock-pricing {
+    background: linear-gradient(135deg, #F0FDF4 0%, #FFFFFF 100%);
+}
+
+body.dark-mode .vitastock-pricing {
+    background: linear-gradient(135deg, #0F2F1F 0%, #1a1a2e 100%);
+}
+
+.vitastock-pricing .pricing-card.featured {
+    border-color: #2B9B93;
+}
+
+.vitastock-pricing .popular-badge {
+    background: #2B9B93;
+}
+
+.vitastock-pricing .btn-primary {
+    background: #2B9B93;
+}
+
+.vitastock-pricing .btn-primary:hover {
+    background: #1a6b65;
+}
+
+.vitastock-pricing .amount {
+    color: #2B9B93;
+}
