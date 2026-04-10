@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARBESA SYSTEMS - ¡Compra exitosa!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+        }
+
+        .confirmation-container {
+            max-width: 550px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .confirmation-card {
+            background: var(--white);
+            border-radius: 32px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(73, 184, 176, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .success-icon i {
+            font-size: 48px;
+            color: var(--cyan-turquoise);
+        }
+
+        .credentials-box {
+            background: var(--gray-light);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: left;
+            border: 1px solid var(--gray-mid);
+        }
+
+        .credential-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-mid);
+        }
+
+        .credential-row:last-child {
+            border-bottom: none;
+        }
+
+        .credential-label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .credential-value {
+            color: var(--cyan-turquoise);
+            font-family: monospace;
+            font-size: 16px;
+        }
+
+        .instruction-box {
+            background: rgba(73, 184, 176, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .instruction-box ul {
+            margin-left: 20px;
+            color: var(--text-light);
+        }
+
+        .instruction-box li {
+            margin: 8px 0;
+        }
+
+        .btn-go {
+            width: 100%;
+            padding: 16px;
+            background: var(--cyan-turquoise);
+            color: white;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-go:hover {
+            background: var(--aqua-dark);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="confirmation-container">
+        <div class="confirmation-card">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+
+            <h2 style="margin-bottom: 10px;">¡Compra exitosa!</h2>
+            <p style="color: var(--text-light);">Gracias por confiar en ARBESA SYSTEMS</p>
+
+            <div class="credentials-box">
+                <h3 style="margin-bottom: 15px; text-align: center;">📋 Tus credenciales de acceso</h3>
+                <div id="credentialsContainer"></div>
+            </div>
+
+            <div class="instruction-box">
+                <h4><i class="fas fa-info-circle"></i> Instrucciones</h4>
+                <ul>
+                    <li><i class="fas fa-globe"></i> Accede usando: <strong>https://app.arbesa.com</strong></li>
+                    <li><i class="fas fa-envelope"></i> Usa el correo y contraseña proporcionados</li>
+                    <li><i class="fas fa-headset"></i> Soporte: +52 238 195 1301 (WhatsApp)</li>
+                </ul>
+            </div>
+
+            <a href="https://app.arbesa.com" class="btn-go" id="goToAppBtn">
+                <i class="fas fa-rocket"></i> Ir a la plataforma
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = decodeURIComponent(urlParams.get('name') || 'Cliente');
+        const userEmail = decodeURIComponent(urlParams.get('email') || '');
+        const planName = decodeURIComponent(urlParams.get('plan') || 'Plan');
+        const planPrice = urlParams.get('price');
+        const productType = urlParams.get('type');
+        const transactionId = urlParams.get('transactionId');
+
+        const generatedPassword = Math.random().toString(36).substring(2, 10);
+        const username = userEmail.split('@')[0] + Math.floor(Math.random() * 1000);
+
+        let productUrl = '';
+        let productName = '';
+        if (productType === 'helpdesk') {
+            productUrl = 'https://helpdesk.arbesa.com';
+            productName = 'ARBESA Help Desk';
+        } else if (productType === 'vitastock') {
+            productUrl = 'https://vitastock.arbesa.com';
+            productName = 'ARBESA VitaStock';
+        } else {
+            productUrl = 'https://app.arbesa.com';
+            productName = 'ARBESA SYSTEMS';
+        }
+
+        const credentialsContainer = document.getElementById('credentialsContainer');
+        credentialsContainer.innerHTML = `
+            <div class="credential-row">
+                <span class="credential-label">📧 Usuario / Email:</span>
+                <span class="credential-value">${userEmail || username + '@arbesa.com'}</span>
+            </div>
+            <div class="credential-row">
+                <span class="credential-label">🔑 Contraseña:</span>
+                <span class="credential-value">${generatedPassword}</span>
+            </div>
+            <div class="credential-row">
+                <span class="credential-label">📦 Plan contratado:</span>
+                <span class="credential-value">${planName} - $${planPrice}/mes</span>
+            </div>
+            <div class="credential-row">
+                <span class="credential-label">🆔 ID de transacción:</span>
+                <span class="credential-value">${transactionId}</span>
+            </div>
+            <div class="credential-row">
+                <span class="credential-label">📅 Fecha de activación:</span>
+                <span class="credential-value">${new Date().toLocaleDateString()}</span>
+            </div>
+        `;
+
+        localStorage.setItem('userCredentials', JSON.stringify({
+            username: userEmail || username + '@arbesa.com',
+            password: generatedPassword,
+            plan: planName,
+            product: productName
+        }));
+
+        const goToAppBtn = document.getElementById('goToAppBtn');
+        goToAppBtn.href = productUrl;
+        goToAppBtn.innerHTML = `<i class="fas fa-rocket"></i> Ir a ${productName}`;
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+</body>
+
+</html>

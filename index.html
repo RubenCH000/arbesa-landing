@@ -14,9 +14,7 @@
     <meta name="theme-color" content="#49B8B0">
 
     <link rel="stylesheet" href="css/styles.css">
-    <!--<script src="js/main.js"></script>-->
 
-    <!-- Fonts & CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -73,7 +71,6 @@
                         <i class="fas fa-calendar-alt"></i> Agendar demo
                     </a>
                 </div>
-
             </div>
             <div class="hero-image">
                 <div class="floating-elements">
@@ -144,7 +141,7 @@
                     <div class="product-icon">
                         <i class="fas fa-boxes"></i>
                     </div>
-                    <h3>ARBESA Inventario</h3>
+                    <h3>ARBESA Vitastock</h3>
                     <p class="product-description">
                         Gestor de inventarios para Windows. Controla tus productos,
                         entradas, salidas y genera reportes en PDF.
@@ -225,7 +222,7 @@
         </div>
     </section>
 
-    <!-- DEMO PREVIEW (Estilo Figma) -->
+    <!-- DEMO PREVIEW -->
     <section id="demo-helpdesk" class="demo-section">
         <div class="container">
             <div class="demo-content">
@@ -297,7 +294,7 @@
         </div>
     </section>
 
-    <!-- ========== PRECIOS HELP DESK ========== -->
+    <!-- PRECIOS HELP DESK -->
     <section id="precios-helpdesk" class="pricing">
         <div class="container">
             <div class="section-header">
@@ -306,7 +303,6 @@
                 <p class="section-subtitle">Solución completa para gestión de tickets y soporte técnico</p>
             </div>
             <div class="pricing-grid">
-                <!-- Plan Básico Help Desk -->
                 <div class="pricing-card">
                     <div class="pricing-header">
                         <h3>Básico</h3>
@@ -326,10 +322,10 @@
                         <li><i class="fas fa-times"></i> API personalizada</li>
                         <li><i class="fas fa-times"></i> App móvil</li>
                     </ul>
-                    <a href="#contacto" class="btn btn-outline btn-block">Comenzar</a>
+                    <a href="#" class="btn btn-primary btn-block"
+                        onclick="checkAndBuy(event, 'Básico Help Desk', '29', 'helpdesk')">Comprar ahora</a>
                 </div>
 
-                <!-- Plan Profesional Help Desk -->
                 <div class="pricing-card featured">
                     <div class="popular-badge">Más popular</div>
                     <div class="pricing-header">
@@ -350,10 +346,10 @@
                         <li><i class="fas fa-check"></i> API personalizada</li>
                         <li><i class="fas fa-check"></i> App móvil para técnicos</li>
                     </ul>
-                    <a href="#contacto" class="btn btn-primary btn-block">Comenzar</a>
+                    <a href="#" class="btn btn-primary btn-block"
+                        onclick="checkAndBuy(event, 'Profesional Help Desk', '79', 'helpdesk')">Comprar ahora</a>
                 </div>
 
-                <!-- Plan Empresarial Help Desk -->
                 <div class="pricing-card">
                     <div class="pricing-header">
                         <h3>Empresarial</h3>
@@ -374,13 +370,14 @@
                         <li><i class="fas fa-check"></i> App móvil white label</li>
                         <li><i class="fas fa-check"></i> Implementación asistida</li>
                     </ul>
-                    <a href="#contacto" class="btn btn-outline btn-block">Contactar</a>
+                    <a href="#" class="btn btn-primary btn-block"
+                        onclick="checkAndBuy(event, 'Empresarial Help Desk', '199', 'helpdesk')">Comprar ahora</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ========== PRECIOS VITASTOCK ========== -->
+    <!-- PRECIOS VITASTOCK -->
     <section id="precios-vitastock" class="pricing vitastock-pricing">
         <div class="container">
             <div class="section-header">
@@ -389,7 +386,6 @@
                 <p class="section-subtitle">Software de escritorio para Windows - Control total de tu stock</p>
             </div>
             <div class="pricing-grid">
-                <!-- Plan Básico VitaStock -->
                 <div class="pricing-card">
                     <div class="pricing-header">
                         <h3>Básico</h3>
@@ -409,10 +405,10 @@
                         <li><i class="fas fa-times"></i> Código de barras</li>
                         <li><i class="fas fa-times"></i> Múltiples sucursales</li>
                     </ul>
-                    <a href="#contacto" class="btn btn-outline btn-block">Comenzar</a>
+                    <a href="#" class="btn btn-primary btn-block"
+                        onclick="checkAndBuy(event, 'Básico VitaStock', '19', 'vitastock')">Comprar ahora</a>
                 </div>
 
-                <!-- Plan Profesional VitaStock -->
                 <div class="pricing-card featured">
                     <div class="popular-badge">Más popular</div>
                     <div class="pricing-header">
@@ -434,10 +430,10 @@
                         <li><i class="fas fa-check"></i> Alertas de stock mínimo</li>
                         <li><i class="fas fa-times"></i> Múltiples sucursales</li>
                     </ul>
-                    <a href="#contacto" class="btn btn-primary btn-block">Comenzar</a>
+                    <a href="#" class="btn btn-primary btn-block"
+                        onclick="checkAndBuy(event, 'Profesional VitaStock', '49', 'vitastock')">Comprar ahora</a>
                 </div>
 
-                <!-- Plan Empresarial VitaStock -->
                 <div class="pricing-card">
                     <div class="pricing-header">
                         <h3>Empresarial</h3>
@@ -459,7 +455,8 @@
                         <li><i class="fas fa-check"></i> API de integración</li>
                         <li><i class="fas fa-check"></i> Capacitación incluida</li>
                     </ul>
-                    <a href="#contacto" class="btn btn-outline btn-block">Contactar</a>
+                    <a href="#" class="btn btn-primary btn-block"
+                        onclick="checkAndBuy(event, 'Empresarial VitaStock', '99', 'vitastock')">Comprar ahora</a>
                 </div>
             </div>
         </div>
@@ -576,12 +573,389 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 ARBESA SYSTEMS. Todos los derechos reservados. | Desarrollado con ❤️ en México</p>
+                <p>&copy; 2026 ARBESA SYSTEMS. Todos los derechos reservados. | Desarrollado en San Pablo Tepetzingo</p>
             </div>
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
+    <!-- MODAL LOGIN/REGISTRO -->
+    <div id="authModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="modal-close" id="closeModal">&times;</span>
+
+            <div id="loginForm">
+                <h3 class="modal-title">Iniciar Sesión</h3>
+                <form id="loginSubmit">
+                    <div class="form-group">
+                        <input type="email" id="loginEmail" placeholder="Correo electrónico" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="loginPassword" placeholder="Contraseña" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                </form>
+                <div class="modal-footer">
+                    ¿No tienes cuenta? <a id="showRegister">Regístrate aquí</a>
+                </div>
+            </div>
+
+            <div id="registerForm" style="display: none;">
+                <h3 class="modal-title">Crear cuenta</h3>
+                <button onclick="loginWithGoogle()" class="btn-google">
+                    <i class="fab fa-google"></i> Registrarse con Google
+                </button>
+                <div class="divider">
+                    <span>o</span>
+                </div>
+                <form id="registerSubmit">
+                    <div class="form-group">
+                        <input type="text" id="regName" placeholder="Nombre completo" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="regEmail" placeholder="Correo electrónico" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="regPassword" placeholder="Contraseña" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="regConfirmPassword" placeholder="Confirmar contraseña" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+                </form>
+                <div class="modal-footer">
+                    ¿Ya tienes cuenta? <a id="showLogin">Inicia sesión aquí</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL NOTIFICACIÓN -->
+    <div id="notificationModal" class="notification-modal">
+        <div class="notification-content">
+            <div class="notification-icon" id="notificationIcon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 class="notification-title" id="notificationTitle">Título</h3>
+            <p class="notification-message" id="notificationMessage">Mensaje</p>
+            <div class="notification-details" id="notificationDetails" style="display: none;"></div>
+            <button class="notification-btn" id="notificationBtn">Aceptar</button>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // ========== FUNCIONES DE NOTIFICACIÓN ==========
+        function showNotification(type, title, message, details = null, redirectUrl = null) {
+            const modal = document.getElementById('notificationModal');
+            const icon = document.getElementById('notificationIcon');
+            const titleEl = document.getElementById('notificationTitle');
+            const messageEl = document.getElementById('notificationMessage');
+            const detailsEl = document.getElementById('notificationDetails');
+            const btn = document.getElementById('notificationBtn');
+
+            icon.className = 'notification-icon ' + type;
+            switch (type) {
+                case 'success':
+                    icon.innerHTML = '<i class="fas fa-check-circle"></i>';
+                    break;
+                case 'error':
+                    icon.innerHTML = '<i class="fas fa-times-circle"></i>';
+                    break;
+                case 'warning':
+                    icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+                    break;
+                case 'info':
+                    icon.innerHTML = '<i class="fas fa-info-circle"></i>';
+                    break;
+            }
+
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+
+            if (details) {
+                detailsEl.style.display = 'block';
+                detailsEl.innerHTML = details;
+            } else {
+                detailsEl.style.display = 'none';
+            }
+
+            modal.classList.add('active');
+
+            btn.onclick = function () {
+                modal.classList.remove('active');
+                if (redirectUrl) {
+                    window.location.href = redirectUrl;
+                }
+            };
+
+            modal.onclick = function (e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    if (redirectUrl) {
+                        window.location.href = redirectUrl;
+                    }
+                }
+            };
+        }
+
+        // ========== CHECK AND BUY ==========
+        window.checkAndBuy = function (event, planName, planPrice, productType) {
+            event.preventDefault();
+            console.log('🟢 Comprar clicked:', planName, planPrice, productType);
+
+            const user = localStorage.getItem('user');
+            const isLoggedIn = user && JSON.parse(user).email;
+
+            if (!isLoggedIn) {
+                localStorage.setItem('pendingPlan', JSON.stringify({
+                    name: planName,
+                    price: planPrice,
+                    type: productType
+                }));
+
+                const modal = document.getElementById('authModal');
+                const loginForm = document.getElementById('loginForm');
+                const registerForm = document.getElementById('registerForm');
+                if (modal) {
+                    loginForm.style.display = 'none';
+                    registerForm.style.display = 'block';
+                    modal.style.display = 'flex';
+                } else {
+                    alert('Por favor inicia sesión o regístrate primero');
+                }
+            } else {
+                window.location.href = `checkout.html?plan=${encodeURIComponent(planName)}&price=${planPrice}&type=${productType}`;
+            }
+        };
+
+        // ========== MODAL LOGIN/REGISTRO ==========
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('authModal');
+            const loginBtn = document.getElementById('loginBtn');
+            const registerBtn = document.getElementById('registerBtn');
+            const closeModal = document.getElementById('closeModal');
+            const showRegister = document.getElementById('showRegister');
+            const showLogin = document.getElementById('showLogin');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+
+            if (loginBtn) {
+                loginBtn.onclick = function (e) {
+                    e.preventDefault();
+                    if (modal) {
+                        loginForm.style.display = 'block';
+                        registerForm.style.display = 'none';
+                        modal.style.display = 'flex';
+                    }
+                };
+            }
+
+            if (registerBtn) {
+                registerBtn.onclick = function (e) {
+                    e.preventDefault();
+                    if (modal) {
+                        loginForm.style.display = 'none';
+                        registerForm.style.display = 'block';
+                        modal.style.display = 'flex';
+                    }
+                };
+            }
+
+            if (closeModal) {
+                closeModal.onclick = function () {
+                    if (modal) modal.style.display = 'none';
+                };
+            }
+
+            if (showRegister) {
+                showRegister.onclick = function (e) {
+                    e.preventDefault();
+                    loginForm.style.display = 'none';
+                    registerForm.style.display = 'block';
+                };
+            }
+
+            if (showLogin) {
+                showLogin.onclick = function (e) {
+                    e.preventDefault();
+                    loginForm.style.display = 'block';
+                    registerForm.style.display = 'none';
+                };
+            }
+
+            window.onclick = function (e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            };
+        });
+
+        // ========== REGISTRO ==========
+        const registerSubmit = document.getElementById('registerSubmit');
+        if (registerSubmit) {
+            registerSubmit.onsubmit = function (e) {
+                e.preventDefault();
+                const name = document.getElementById('regName').value;
+                const email = document.getElementById('regEmail').value;
+                const password = document.getElementById('regPassword').value;
+                const confirm = document.getElementById('regConfirmPassword').value;
+
+                if (password !== confirm) {
+                    showNotification('error', 'Error', 'Las contraseñas no coinciden');
+                    return;
+                }
+
+                if (password.length < 6) {
+                    showNotification('error', 'Error', 'La contraseña debe tener al menos 6 caracteres');
+                    return;
+                }
+
+                // Guardar usuario
+                const user = { name: name, email: email, password: password };
+                localStorage.setItem('user', JSON.stringify(user));
+
+                // Verificar plan pendiente
+                const pendingPlan = localStorage.getItem('pendingPlan');
+                if (pendingPlan) {
+                    const plan = JSON.parse(pendingPlan);
+                    localStorage.removeItem('pendingPlan');
+                    document.getElementById('authModal').style.display = 'none';
+                    window.location.href = `checkout.html?plan=${encodeURIComponent(plan.name)}&price=${plan.price}&type=${plan.type}`;
+                } else {
+                    document.getElementById('authModal').style.display = 'none';
+                    showNotification('success', '¡Registro exitoso!', `Bienvenido ${name}, tu cuenta ha sido creada.`);
+                }
+                document.getElementById('registerForm').reset();
+            };
+        }
+
+        // ========== LOGIN ==========
+        const loginSubmit = document.getElementById('loginSubmit');
+        if (loginSubmit) {
+            loginSubmit.onsubmit = function (e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+
+                const savedUser = localStorage.getItem('user');
+                if (savedUser) {
+                    const user = JSON.parse(savedUser);
+                    if (user.email === email && user.password === password) {
+                        const pendingPlan = localStorage.getItem('pendingPlan');
+                        if (pendingPlan) {
+                            const plan = JSON.parse(pendingPlan);
+                            localStorage.removeItem('pendingPlan');
+                            document.getElementById('authModal').style.display = 'none';
+                            window.location.href = `checkout.html?plan=${encodeURIComponent(plan.name)}&price=${plan.price}&type=${plan.type}`;
+                        } else {
+                            document.getElementById('authModal').style.display = 'none';
+                            showNotification('success', '¡Sesión iniciada!', `Bienvenido de nuevo ${user.name || email}`);
+                        }
+                    } else {
+                        showNotification('error', 'Error', 'Correo o contraseña incorrectos');
+                    }
+                } else {
+                    showNotification('error', 'Error', 'No hay cuenta registrada con este correo');
+                }
+                document.getElementById('loginForm').reset();
+            };
+        }
+
+        // ========== GOOGLE LOGIN ==========
+        window.loginWithGoogle = function () {
+            showNotification('info', 'Google Login', 'Esta funcionalidad requiere configuración de Firebase. Por ahora usa registro con email.');
+        };
+
+        // ========== NAVBAR SCROLL ==========
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (navbar) {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            }
+        });
+
+        // ========== DARK MODE ==========
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            themeToggle.onclick = function () {
+                document.body.classList.toggle('dark-mode');
+                if (document.body.classList.contains('dark-mode')) {
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    localStorage.setItem('theme', 'light');
+                }
+            };
+        }
+
+        // ========== MENÚ MÓVIL ==========
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.querySelector('.nav-menu');
+        const navButtons = document.querySelector('.nav-buttons');
+
+        if (menuToggle) {
+            menuToggle.onclick = function () {
+                const isOpen = navMenu && navMenu.style.display === 'flex';
+                if (isOpen) {
+                    if (navMenu) navMenu.style.display = 'none';
+                    if (navButtons) navButtons.style.display = 'none';
+                } else {
+                    if (navMenu) {
+                        navMenu.style.display = 'flex';
+                        navMenu.style.flexDirection = 'column';
+                        navMenu.style.position = 'absolute';
+                        navMenu.style.top = '70px';
+                        navMenu.style.left = '0';
+                        navMenu.style.right = '0';
+                        navMenu.style.backgroundColor = '#FFFFFF';
+                        navMenu.style.padding = '20px';
+                        navMenu.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+                    }
+                    if (navButtons) {
+                        navButtons.style.display = 'flex';
+                        navButtons.style.flexDirection = 'column';
+                        navButtons.style.position = 'absolute';
+                        navButtons.style.top = '250px';
+                        navButtons.style.left = '0';
+                        navButtons.style.right = '0';
+                        navButtons.style.backgroundColor = '#FFFFFF';
+                        navButtons.style.padding = '20px';
+                    }
+                }
+            };
+        }
+
+        // ========== SMOOTH SCROLL ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ========== CONTACTO ==========
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.onsubmit = function (e) {
+                e.preventDefault();
+                showNotification('success', '¡Mensaje enviado!', 'Gracias por contactarnos. Pronto recibirás respuesta.');
+                contactForm.reset();
+            };
+        }
+    </script>
 </body>
 
 </html>

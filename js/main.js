@@ -123,30 +123,315 @@ document.querySelectorAll('.feature-card, .product-card, .pricing-card, .testimo
     observer.observe(el);
 });
 
-// ========== FORM SUBMIT ==========
+// Formulario de contacto
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
-    contactForm.addEventListener('submit', function (e) {
+    contactForm.onsubmit = function (e) {
         e.preventDefault();
-        alert('Gracias por contactarnos. Pronto recibirás respuesta.');
+        showNotification('success', '¡Mensaje enviado!', 'Gracias por contactarnos. Pronto recibirás respuesta.');
         contactForm.reset();
-    });
+    };
 }
 
-// ========== LOGIN/REGISTER PLACEHOLDERS ==========
-const loginBtn = document.getElementById('loginBtn');
-const registerBtn = document.getElementById('registerBtn');
+// // ========== BOTONES LOGIN/REGISTER ==========
+// const loginBtn = document.getElementById('loginBtn');
+// const registerBtn = document.getElementById('registerBtn');
+// const modal = document.getElementById('authModal');
+// const loginForm = document.getElementById('loginForm');
+// const registerForm = document.getElementById('registerForm');
 
+// if (loginBtn) {
+//     loginBtn.addEventListener('click', function (e) {
+//         e.preventDefault();
+//         if (modal) {
+//             loginForm.style.display = 'block';
+//             registerForm.style.display = 'none';
+//             modal.classList.add('active');
+//         } else {
+//             alert('🔐 Acceso a la plataforma\n\nActualmente en desarrollo. Pronto estará disponible.');
+//         }
+//     });
+// }
+
+// if (registerBtn) {
+//     registerBtn.addEventListener('click', function (e) {
+//         e.preventDefault();
+//         if (modal) {
+//             loginForm.style.display = 'none';
+//             registerForm.style.display = 'block';
+//             modal.classList.add('active');
+//         } else {
+//             alert('📝 Registro de nueva cuenta\n\nActualmente en desarrollo. Pronto estará disponible.');
+//         }
+//     });
+// }
+
+// ========== MODAL DE NOTIFICACIÓN ==========
+function showNotification(type, title, message, details = null, redirectUrl = null) {
+    const modal = document.getElementById('notificationModal');
+    const icon = document.getElementById('notificationIcon');
+    const titleEl = document.getElementById('notificationTitle');
+    const messageEl = document.getElementById('notificationMessage');
+    const detailsEl = document.getElementById('notificationDetails');
+    const btn = document.getElementById('notificationBtn');
+
+    // Configurar icono y color según tipo
+    icon.className = 'notification-icon ' + type;
+    switch (type) {
+        case 'success':
+            icon.innerHTML = '<i class="fas fa-check-circle"></i>';
+            break;
+        case 'error':
+            icon.innerHTML = '<i class="fas fa-times-circle"></i>';
+            break;
+        case 'warning':
+            icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+            break;
+        case 'info':
+            icon.innerHTML = '<i class="fas fa-info-circle"></i>';
+            break;
+    }
+
+    titleEl.textContent = title;
+    messageEl.textContent = message;
+
+    if (details) {
+        detailsEl.style.display = 'block';
+        detailsEl.innerHTML = details;
+    } else {
+        detailsEl.style.display = 'none';
+    }
+
+    modal.classList.add('active');
+
+    // Configurar botón
+    btn.onclick = function () {
+        modal.classList.remove('active');
+        if (redirectUrl) {
+            window.location.href = redirectUrl;
+        }
+    };
+
+    // Cerrar al hacer clic fuera
+    modal.onclick = function (e) {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+            if (redirectUrl) {
+                window.location.href = redirectUrl;
+            }
+        }
+    };
+}
+
+// ========== MODAL LOGIN/REGISTRO ==========
+const closeModal = document.getElementById('closeModal');
+const showRegister = document.getElementById('showRegister');
+const showLogin = document.getElementById('showLogin');
+
+// Abrir modal
 if (loginBtn) {
-    loginBtn.addEventListener('click', function (e) {
+    loginBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        alert('🔐 Acceso a la plataforma\n\nActualmente en desarrollo. Pronto estará disponible.');
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        modal.classList.add('active');
     });
 }
 
 if (registerBtn) {
-    registerBtn.addEventListener('click', function (e) {
+    registerBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        alert('📝 Registro de nueva cuenta\n\nActualmente en desarrollo. Pronto estará disponible.');
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+        modal.classList.add('active');
     });
+}
+
+// Cerrar modal
+if (closeModal) {
+    closeModal.addEventListener('click', () => {
+        modal.classList.remove('active');
+    });
+}
+
+// Cambiar entre login y registro
+if (showRegister) {
+    showRegister.addEventListener('click', () => {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+    });
+}
+
+if (showLogin) {
+    showLogin.addEventListener('click', () => {
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+    });
+}
+
+// Cerrar modal al hacer clic fuera
+window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        modal.classList.remove('active');
+    }
+});
+
+// Selección de plan
+const planOptions = document.querySelectorAll('.plan-option');
+let selectedPlan = 'helpdesk_basic';
+
+planOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        planOptions.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+        selectedPlan = option.dataset.plan;
+    });
+});
+
+// Procesar registro con email
+const registerSubmit = document.getElementById('registerSubmit');
+if (registerSubmit) {
+    registerSubmit.onsubmit = function (e) {
+        e.preventDefault();
+        const name = document.getElementById('regName').value;
+        const email = document.getElementById('regEmail').value;
+        const password = document.getElementById('regPassword').value;
+        const confirm = document.getElementById('regConfirmPassword').value;
+
+        if (password !== confirm) {
+            showNotification('error', 'Error', 'Las contraseñas no coinciden');
+            return;
+        }
+
+        if (password.length < 6) {
+            showNotification('error', 'Error', 'La contraseña debe tener al menos 6 caracteres');
+            return;
+        }
+
+        const details = `
+            <strong>👤 Nombre:</strong> ${name}<br>
+            <strong>📧 Email:</strong> ${email}<br>
+            <strong>📅 Fecha:</strong> ${new Date().toLocaleDateString()}
+        `;
+
+        showNotification(
+            'success',
+            '¡Registro exitoso!',
+            'Tu cuenta ha sido creada correctamente.',
+            details,
+            'https://app.arbesa.com/dashboard'
+        );
+
+        document.getElementById('authModal').style.display = 'none';
+        document.getElementById('registerForm').reset();
+    };
+}
+
+// Procesar login con email
+const loginSubmit = document.getElementById('loginSubmit');
+if (loginSubmit) {
+    loginSubmit.onsubmit = function (e) {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+
+        showNotification(
+            'success',
+            '¡Sesión iniciada!',
+            `Bienvenido de nuevo, ${email}`,
+            null,
+            'https://app.arbesa.com/dashboard'
+        );
+
+        document.getElementById('authModal').style.display = 'none';
+        document.getElementById('loginForm').reset();
+    };
+}
+
+function openRegisterModal() {
+    loginForm.style.display = 'none';
+    registerForm.style.display = 'block';
+    modal.classList.add('active');
+}
+
+window.loginWithGoogle = async function () {
+    try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+
+        const details = `
+            <strong>👤 Nombre:</strong> ${user.displayName}<br>
+            <strong>📧 Email:</strong> ${user.email}<br>
+            <strong>🆔 UID:</strong> ${user.uid.substring(0, 15)}...
+        `;
+
+        showNotification(
+            'success',
+            '¡Bienvenido!',
+            `Hola ${user.displayName}, has iniciado sesión correctamente.`,
+            details,
+            'https://app.arbesa.com/dashboard'
+        );
+
+        localStorage.setItem('user', JSON.stringify({
+            name: user.displayName,
+            email: user.email,
+            uid: user.uid
+        }));
+
+        document.getElementById('authModal').style.display = 'none';
+
+    } catch (error) {
+        console.error(error);
+        showNotification('error', 'Error de autenticación', error.message);
+    }
+};
+
+// Si hay errores de validación
+if (!_isFormValid) {
+    showNotification('error', 'Formulario incompleto', 'Por favor completa todos los campos requeridos.');
+    return;
+}
+
+// Verificar si está logueado antes de comprar
+window.checkAndBuy = function (event, planName, planPrice, productType) {
+    event.preventDefault();
+
+    const user = localStorage.getItem('user');
+    const isLoggedIn = user && JSON.parse(user).email;
+
+    if (!isLoggedIn) {
+        // Mostrar modal de login/registro
+        const modal = document.getElementById('authModal');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        if (modal) {
+            loginForm.style.display = 'block';
+            registerForm.style.display = 'none';
+            modal.style.display = 'flex';
+
+            // Guardar plan seleccionado para después de login
+            localStorage.setItem('pendingPlan', JSON.stringify({
+                name: planName,
+                price: planPrice,
+                type: productType
+            }));
+        }
+    } else {
+        // Redirigir a checkout
+        window.location.href = `checkout.html?plan=${encodeURIComponent(planName)}&price=${planPrice}&type=${productType}`;
+    }
+};
+
+// Después de login exitoso
+if (success && mounted) {
+    const pendingPlan = localStorage.getItem('pendingPlan');
+    if (pendingPlan) {
+        const plan = JSON.parse(pendingPlan);
+        localStorage.removeItem('pendingPlan');
+        window.location.href = `checkout.html?plan=${encodeURIComponent(plan.name)}&price=${plan.price}&type=${plan.type}`;
+    } else {
+        // Redirigir a dashboard o cerrar modal
+        document.getElementById('authModal').style.display = 'none';
+        showNotification('success', '¡Bienvenido!', 'Has iniciado sesión correctamente.');
+    }
 }

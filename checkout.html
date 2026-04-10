@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARBESA SYSTEMS - Completar compra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+        }
+
+        .checkout-container {
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .checkout-card {
+            background: var(--white);
+            border-radius: 32px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .plan-summary {
+            background: var(--gray-light);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .plan-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--cyan-turquoise);
+        }
+
+        .plan-price {
+            font-size: 32px;
+            font-weight: 800;
+            margin: 10px 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid var(--gray-mid);
+            border-radius: 16px;
+            background: var(--white);
+            color: var(--text-dark);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-pay {
+            width: 100%;
+            padding: 16px;
+            background: var(--cyan-turquoise);
+            color: white;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-pay:hover {
+            background: var(--aqua-dark);
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: var(--cyan-turquoise);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="checkout-container">
+        <div class="checkout-card">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img src="assets/images/logo-claro.png" alt="ARBESA SYSTEMS" style="height: 45px;">
+            </div>
+
+            <h2 style="text-align: center; margin-bottom: 10px;">Completar compra</h2>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 30px;">Ingresa tus datos de pago</p>
+
+            <div class="plan-summary" id="planSummary"></div>
+
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label>Nombre en tarjeta</label>
+                    <input type="text" id="cardName" placeholder="Como aparece en la tarjeta" required>
+                </div>
+                <div class="form-group">
+                    <label>Número de tarjeta</label>
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>MM/AA</label>
+                        <input type="text" id="cardExpiry" placeholder="12/28" maxlength="5" required>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>CVV</label>
+                        <input type="password" id="cardCvv" placeholder="123" maxlength="4" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-pay" id="payBtn">
+                    <i class="fas fa-lock"></i> Pagar ahora
+                </button>
+            </form>
+
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Volver a la tienda
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const planName = urlParams.get('plan');
+        const planPrice = urlParams.get('price');
+        const productType = urlParams.get('type');
+
+        const planSummary = document.getElementById('planSummary');
+        if (planName && planPrice) {
+            planSummary.innerHTML = `
+                <div class="plan-name">${decodeURIComponent(planName)}</div>
+                <div class="plan-price">$${planPrice} <span style="font-size: 14px;">/mes</span></div>
+                <p style="color: var(--text-light); margin-top: 10px;">Producto: ${productType === 'helpdesk' ? 'ARBESA Help Desk' : 'ARBESA VitaStock'}</p>
+            `;
+        }
+
+        // Formatear tarjeta
+        const cardNumberInput = document.getElementById('cardNumber');
+        cardNumberInput.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.replace(/(\d{4})/g, '$1 ').trim();
+            e.target.value = value.substring(0, 19);
+        });
+
+        // Formatear fecha
+        const cardExpiryInput = document.getElementById('cardExpiry');
+        cardExpiryInput.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value.substring(0, 5);
+        });
+
+        // Procesar pago
+        const paymentForm = document.getElementById('paymentForm');
+        paymentForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const cardName = document.getElementById('cardName').value;
+            const cardNumber = document.getElementById('cardNumber').value;
+            const cardExpiry = document.getElementById('cardExpiry').value;
+            const cardCvv = document.getElementById('cardCvv').value;
+
+            if (!cardName || !cardNumber || !cardExpiry || !cardCvv) {
+                alert('Por favor completa todos los campos');
+                return;
+            }
+
+            const payBtn = document.getElementById('payBtn');
+            payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+            payBtn.disabled = true;
+
+            setTimeout(() => {
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+                const params = new URLSearchParams({
+                    name: user.name || cardName,
+                    email: user.email || '',
+                    plan: planName,
+                    price: planPrice,
+                    type: productType,
+                    transactionId: 'TRX-' + Math.random().toString(36).substring(2, 10).toUpperCase()
+                });
+
+                window.location.href = 'confirmation.html?' + params.toString();
+            }, 1500);
+        });
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+</body>
+
+</html>
