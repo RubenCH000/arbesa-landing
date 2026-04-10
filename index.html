@@ -668,6 +668,15 @@
     </script>
 
     <script>
+
+        if (!localStorage.getItem('admin')) {
+            localStorage.setItem('admin', JSON.stringify({
+                email: 'admin@arbesa.com',
+                password: 'admin123',
+                role: 'admin'
+            }));
+        }
+
         // ========== FUNCIONES DE NOTIFICACIÓN ==========
         function showNotification(type, title, message, details = null, redirectUrl = null) {
             const modal = document.getElementById('notificationModal');

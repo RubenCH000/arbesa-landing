@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARBESA SYSTEMS - Panel de Administración</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-icon-180x180.png">
+    <meta name="theme-color" content="#49B8B0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body>
+    <!-- NAVBAR ADMIN -->
+    <nav class="navbar admin-navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="assets/images/logo-claro.png" alt="ARBESA SYSTEMS" class="logo-img logo-light">
+                <img src="assets/images/logo-oscuro.png" alt="ARBESA SYSTEMS" class="logo-img logo-dark">
+                <span class="admin-badge">ADMIN</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#" class="nav-link active" data-tab="dashboard">Dashboard</a>
+                <a href="#" class="nav-link" data-tab="empresas">Empresas</a>
+                <a href="#" class="nav-link" data-tab="usuarios">Usuarios</a>
+                <a href="#" class="nav-link" data-tab="ventas">Ventas</a>
+                <a href="#" class="nav-link" data-tab="configuracion">Configuración</a>
+            </div>
+            <div class="nav-buttons">
+                <button id="themeToggle" class="btn-theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="admin-user">
+                    <i class="fas fa-user-shield"></i>
+                    <span id="adminName">Admin</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="admin-main">
+        <div class="container">
+            <!-- DASHBOARD -->
+            <div id="tab-dashboard" class="tab-content active">
+                <div class="dashboard-header">
+                    <h1>Dashboard</h1>
+                    <p>Bienvenido al panel de administración de ARBESA SYSTEMS</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-building"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="totalEmpresas">0</span>
+                            <span class="stat-label">Empresas registradas</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="totalUsuarios">0</span>
+                            <span class="stat-label">Usuarios activos</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="totalVentas">0</span>
+                            <span class="stat-label">Ventas totales</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="ingresosTotales">$0</span>
+                            <span class="stat-label">Ingresos totales</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Ventas por mes</h3>
+                        <canvas id="salesChart" width="400" height="200"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Planes más vendidos</h3>
+                        <canvas id="plansChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EMPRESAS -->
+            <div id="tab-empresas" class="tab-content">
+                <div class="section-header">
+                    <h2>Empresas registradas</h2>
+                    <button class="btn btn-primary" id="btnAddEmpresa">
+                        <i class="fas fa-plus"></i> Nueva empresa
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table class="admin-table" id="empresasTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Plan</th>
+                                <th>Estado</th>
+                                <th>Fecha registro</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="empresasList">
+                            <tr>
+                                <td colspan="7" class="text-center">Cargando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- USUARIOS -->
+            <div id="tab-usuarios" class="tab-content">
+                <div class="section-header">
+                    <h2>Usuarios del sistema</h2>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchUser" placeholder="Buscar usuario...">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="admin-table" id="usuariosTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Empresa</th>
+                                <th>Rol</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usuariosList">
+                            <tr>
+                                <td colspan="7" class="text-center">Cargando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VENTAS -->
+            <div id="tab-ventas" class="tab-content">
+                <div class="section-header">
+                    <h2>Historial de ventas</h2>
+                    <div class="date-filters">
+                        <input type="date" id="fechaInicio">
+                        <input type="date" id="fechaFin">
+                        <button class="btn btn-outline" id="btnFiltrar">Filtrar</button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="admin-table" id="ventasTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Empresa</th>
+                                <th>Plan</th>
+                                <th>Monto</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ventasList">
+                            <tr>
+                                <td colspan="7" class="text-center">Cargando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CONFIGURACIÓN -->
+            <div id="tab-configuracion" class="tab-content">
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3><i class="fas fa-cog"></i> General</h3>
+                        <div class="settings-form">
+                            <div class="form-group">
+                                <label>Nombre del sistema</label>
+                                <input type="text" id="systemName" value="ARBESA SYSTEMS">
+                            </div>
+                            <div class="form-group">
+                                <label>Email de soporte</label>
+                                <input type="email" id="supportEmail" value="arbesasystem@gmail.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Teléfono de soporte</label>
+                                <input type="text" id="supportPhone" value="+52 238 195 1301">
+                            </div>
+                            <button class="btn btn-primary" id="saveSettings">Guardar cambios</button>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3><i class="fas fa-chart-line"></i> Planes y precios</h3>
+                        <div id="plansSettings">
+                            <!-- Planes editables -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL PARA AGREGAR/EDITAR EMPRESA -->
+    <div id="empresaModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3 id="empresaModalTitle">Nueva Empresa</h3>
+            <form id="empresaForm">
+                <div class="form-group">
+                    <label>Nombre de la empresa</label>
+                    <input type="text" id="empresaName" required>
+                </div>
+                <div class="form-group">
+                    <label>Correo electrónico</label>
+                    <input type="email" id="empresaEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="text" id="empresaPhone">
+                </div>
+                <div class="form-group">
+                    <label>Plan</label>
+                    <select id="empresaPlan">
+                        <option value="basico">Básico - $29/mes</option>
+                        <option value="profesional">Profesional - $79/mes</option>
+                        <option value="empresarial">Empresarial - $199/mes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Estado</label>
+                    <select id="empresaStatus">
+                        <option value="active">Activo</option>
+                        <option value="inactive">Inactivo</option>
+                        <option value="suspended">Suspendido</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL PARA VER DETALLES DE USUARIO -->
+    <div id="userModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3>Detalles del usuario</h3>
+            <div id="userDetails"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

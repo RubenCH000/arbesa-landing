@@ -7,6 +7,14 @@
             "dest": "/index.html"
         },
         {
+            "src": "/admin",
+            "dest": "/admin.html"
+        },
+        {
+            "src": "/admin.html",
+            "dest": "/admin.html"
+        },
+        {
             "src": "/checkout",
             "dest": "/checkout.html"
         },
