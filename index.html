@@ -861,11 +861,6 @@
             };
         }
 
-        // ========== GOOGLE LOGIN ==========
-        window.loginWithGoogle = function () {
-            showNotification('info', 'Google Login', 'Esta funcionalidad requiere configuración de Firebase. Por ahora usa registro con email.');
-        };
-
         // ========== NAVBAR SCROLL ==========
         window.addEventListener('scroll', function () {
             const navbar = document.querySelector('.navbar');
@@ -956,6 +951,71 @@
             };
         }
     </script>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+
+        // Tu configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyB8CTljs84r5ImivVrSaAeITcs2jWRFDCM",
+            authDomain: "arbesa-landing.firebaseapp.com",
+            projectId: "arbesa-landing",
+            storageBucket: "arbesa-landing.firebasestorage.app",
+            messagingSenderId: "752993027681",
+            appId: "1:752993027681:web:0ad57cefc7ed9a97388c20"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // Función para login con Google
+        window.loginWithGoogle = async function () {
+            try {
+                console.log('🟢 Iniciando login con Google...');
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+
+                console.log('✅ Usuario autenticado:', user.email);
+
+                // Guardar usuario en localStorage
+                localStorage.setItem('user', JSON.stringify({
+                    name: user.displayName,
+                    email: user.email,
+                    uid: user.uid,
+                    photoURL: user.photoURL
+                }));
+
+                // Verificar si hay plan pendiente
+                const pendingPlan = localStorage.getItem('pendingPlan');
+                if (pendingPlan) {
+                    const plan = JSON.parse(pendingPlan);
+                    localStorage.removeItem('pendingPlan');
+                    window.location.href = `checkout.html?plan=${encodeURIComponent(plan.name)}&price=${plan.price}&type=${plan.type}`;
+                } else {
+                    showNotification('success', '¡Bienvenido!', `Hola ${user.displayName}, has iniciado sesión correctamente.`);
+                    document.getElementById('authModal').style.display = 'none';
+                }
+
+            } catch (error) {
+                console.error('🔴 Error en login con Google:', error);
+                showNotification('error', 'Error de autenticación', error.message);
+            }
+        };
+
+        // Escuchar cambios en el estado de autenticación
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log('👤 Usuario logueado:', user.email);
+            } else {
+                console.log('👤 Usuario no logueado');
+            }
+        });
+    </script>
+
 </body>
 
 </html>
