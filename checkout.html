@@ -153,13 +153,14 @@
     </div>
 
     <script>
+        // Obtener datos del plan de la URL
         const urlParams = new URLSearchParams(window.location.search);
         const planName = urlParams.get('plan');
         const planPrice = urlParams.get('price');
         const productType = urlParams.get('type');
 
         const planSummary = document.getElementById('planSummary');
-        if (planName && planPrice) {
+        if (planName && planPrice && planSummary) {
             planSummary.innerHTML = `
                 <div class="plan-name">${decodeURIComponent(planName)}</div>
                 <div class="plan-price">$${planPrice} <span style="font-size: 14px;">/mes</span></div>
@@ -167,59 +168,73 @@
             `;
         }
 
-        // Formatear tarjeta
+        // Formatear número de tarjeta
         const cardNumberInput = document.getElementById('cardNumber');
-        cardNumberInput.addEventListener('input', function (e) {
-            let value = e.target.value.replace(/\D/g, '');
-            value = value.replace(/(\d{4})/g, '$1 ').trim();
-            e.target.value = value.substring(0, 19);
-        });
+        if (cardNumberInput) {
+            cardNumberInput.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = value.replace(/(\d{4})/g, '$1 ').trim();
+                e.target.value = value.substring(0, 19);
+            });
+        }
 
-        // Formatear fecha
+        // Formatear fecha de expiración
         const cardExpiryInput = document.getElementById('cardExpiry');
-        cardExpiryInput.addEventListener('input', function (e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length >= 2) {
-                value = value.substring(0, 2) + '/' + value.substring(2, 4);
-            }
-            e.target.value = value.substring(0, 5);
-        });
+        if (cardExpiryInput) {
+            cardExpiryInput.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length >= 2) {
+                    value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                }
+                e.target.value = value.substring(0, 5);
+            });
+        }
 
         // Procesar pago
         const paymentForm = document.getElementById('paymentForm');
-        paymentForm.addEventListener('submit', function (e) {
-            e.preventDefault();
+        if (paymentForm) {
+            paymentForm.addEventListener('submit', function (e) {
+                e.preventDefault();
 
-            const cardName = document.getElementById('cardName').value;
-            const cardNumber = document.getElementById('cardNumber').value;
-            const cardExpiry = document.getElementById('cardExpiry').value;
-            const cardCvv = document.getElementById('cardCvv').value;
+                const cardName = document.getElementById('cardName').value;
+                const cardNumber = document.getElementById('cardNumber').value;
+                const cardExpiry = document.getElementById('cardExpiry').value;
+                const cardCvv = document.getElementById('cardCvv').value;
 
-            if (!cardName || !cardNumber || !cardExpiry || !cardCvv) {
-                alert('Por favor completa todos los campos');
-                return;
-            }
+                if (!cardName || !cardNumber || !cardExpiry || !cardCvv) {
+                    alert('Por favor completa todos los campos');
+                    return;
+                }
 
-            const payBtn = document.getElementById('payBtn');
-            payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
-            payBtn.disabled = true;
+                const payBtn = document.getElementById('payBtn');
+                payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+                payBtn.disabled = true;
 
-            setTimeout(() => {
-                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                setTimeout(() => {
+                    const user = localStorage.getItem('user');
+                    let userName = 'Cliente';
+                    let userEmail = '';
+                    if (user) {
+                        const userData = JSON.parse(user);
+                        userName = userData.name || 'Cliente';
+                        userEmail = userData.email || '';
+                    }
 
-                const params = new URLSearchParams({
-                    name: user.name || cardName,
-                    email: user.email || '',
-                    plan: planName,
-                    price: planPrice,
-                    type: productType,
-                    transactionId: 'TRX-' + Math.random().toString(36).substring(2, 10).toUpperCase()
-                });
+                    const params = new URLSearchParams({
+                        name: userName,
+                        email: userEmail,
+                        plan: planName,
+                        price: planPrice,
+                        type: productType,
+                        transactionId: 'TRX-' + Math.random().toString(36).substring(2, 10).toUpperCase()
+                    });
 
-                window.location.href = 'confirmation.html?' + params.toString();
-            }, 1500);
-        });
+                    window.location.href = 'confirmation.html?' + params.toString();
+                }, 1500);
+            });
+        }
 
+        // Dark mode
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
         }

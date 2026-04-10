@@ -166,53 +166,47 @@
         const generatedPassword = Math.random().toString(36).substring(2, 10);
         const username = userEmail.split('@')[0] + Math.floor(Math.random() * 1000);
 
-        let productUrl = '';
-        let productName = '';
+        let productUrl = 'https://app.arbesa.com';
+        let productName = 'ARBESA SYSTEMS';
         if (productType === 'helpdesk') {
             productUrl = 'https://helpdesk.arbesa.com';
             productName = 'ARBESA Help Desk';
         } else if (productType === 'vitastock') {
             productUrl = 'https://vitastock.arbesa.com';
             productName = 'ARBESA VitaStock';
-        } else {
-            productUrl = 'https://app.arbesa.com';
-            productName = 'ARBESA SYSTEMS';
         }
 
         const credentialsContainer = document.getElementById('credentialsContainer');
-        credentialsContainer.innerHTML = `
-            <div class="credential-row">
-                <span class="credential-label">📧 Usuario / Email:</span>
-                <span class="credential-value">${userEmail || username + '@arbesa.com'}</span>
-            </div>
-            <div class="credential-row">
-                <span class="credential-label">🔑 Contraseña:</span>
-                <span class="credential-value">${generatedPassword}</span>
-            </div>
-            <div class="credential-row">
-                <span class="credential-label">📦 Plan contratado:</span>
-                <span class="credential-value">${planName} - $${planPrice}/mes</span>
-            </div>
-            <div class="credential-row">
-                <span class="credential-label">🆔 ID de transacción:</span>
-                <span class="credential-value">${transactionId}</span>
-            </div>
-            <div class="credential-row">
-                <span class="credential-label">📅 Fecha de activación:</span>
-                <span class="credential-value">${new Date().toLocaleDateString()}</span>
-            </div>
-        `;
-
-        localStorage.setItem('userCredentials', JSON.stringify({
-            username: userEmail || username + '@arbesa.com',
-            password: generatedPassword,
-            plan: planName,
-            product: productName
-        }));
+        if (credentialsContainer) {
+            credentialsContainer.innerHTML = `
+                <div class="credential-row">
+                    <span class="credential-label">📧 Usuario / Email:</span>
+                    <span class="credential-value">${userEmail || username + '@arbesa.com'}</span>
+                </div>
+                <div class="credential-row">
+                    <span class="credential-label">🔑 Contraseña:</span>
+                    <span class="credential-value">${generatedPassword}</span>
+                </div>
+                <div class="credential-row">
+                    <span class="credential-label">📦 Plan contratado:</span>
+                    <span class="credential-value">${planName} - $${planPrice}/mes</span>
+                </div>
+                <div class="credential-row">
+                    <span class="credential-label">🆔 ID de transacción:</span>
+                    <span class="credential-value">${transactionId}</span>
+                </div>
+                <div class="credential-row">
+                    <span class="credential-label">📅 Fecha de activación:</span>
+                    <span class="credential-value">${new Date().toLocaleDateString()}</span>
+                </div>
+            `;
+        }
 
         const goToAppBtn = document.getElementById('goToAppBtn');
-        goToAppBtn.href = productUrl;
-        goToAppBtn.innerHTML = `<i class="fas fa-rocket"></i> Ir a ${productName}`;
+        if (goToAppBtn) {
+            goToAppBtn.href = productUrl;
+            goToAppBtn.innerHTML = `<i class="fas fa-rocket"></i> Ir a ${productName}`;
+        }
 
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
