@@ -5,6 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ARBESA SYSTEMS - ¡Compra exitosa!</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-icon-180x180.png">
+    <meta name="theme-color" content="#49B8B0">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -143,7 +151,7 @@
                 <h4><i class="fas fa-info-circle"></i> Instrucciones</h4>
                 <ul>
                     <li>Accede a tu cuenta en: <strong>https://app.arbesa.com</strong></li>
-                    <li>Usa el correo y contraseña proporcionados</li>
+                    <li>Usa el usuario y contraseña proporcionados</li>
                     <li>Soporte: +52 238 195 1301 (WhatsApp)</li>
                 </ul>
             </div>
@@ -168,12 +176,12 @@
         if (credentialsContainer) {
             credentialsContainer.innerHTML = `
                 <div class="credential-row">
-                    <span class="credential-label">Usuario / Email:</span>
-                    <span class="credential-value">${userEmail || 'usuario@arbesa.com'}</span>
+                    <span class="credential-label">Usuario:</span>
+                    <span class="credential-value">admin</span>
                 </div>
                 <div class="credential-row">
                     <span class="credential-label">Contraseña:</span>
-                    <span class="credential-value">${generatedPassword}</span>
+                    <span class="credential-value">admin123</span>
                 </div>
                 <div class="credential-row">
                     <span class="credential-label">Plan contratado:</span>

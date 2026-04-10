@@ -1571,3 +1571,208 @@ body.dark-mode .vitastock-pricing {
 .notification-btn:hover {
     background: var(--aqua-dark);
 }
+
+/* ========== MENÚ DE USUARIO RESPONSIVO ========== */
+.user-menu-container {
+    position: relative;
+}
+
+.user-menu-trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 40px;
+    background: var(--gray-light);
+    transition: all 0.3s;
+    max-width: 200px;
+}
+
+.user-menu-trigger:hover {
+    background: var(--gray-mid);
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 50%;
+    background: var(--cyan-turquoise);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.user-avatar i {
+    font-size: 18px;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+}
+
+.user-menu-trigger .fa-chevron-down {
+    font-size: 12px;
+    color: var(--text-light);
+    min-width: 12px;
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 280px;
+    max-width: calc(100vw - 20px);
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    z-index: 1000;
+}
+
+.user-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.user-dropdown-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border-bottom: 1px solid var(--gray-mid);
+}
+
+.user-dropdown-avatar {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 50%;
+    background: var(--cyan-turquoise);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+}
+
+.user-dropdown-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.dropdown-name {
+    display: block;
+    font-weight: 600;
+    color: var(--text-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdown-email {
+    display: block;
+    font-size: 12px;
+    color: var(--text-light);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: background 0.3s;
+    white-space: nowrap;
+}
+
+.user-dropdown-item i {
+    width: 20px;
+    font-size: 16px;
+}
+
+.user-dropdown-item.logout {
+    color: #ef4444;
+}
+
+.user-dropdown-item.logout:hover {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* ========== RESPONSIVE MÓVIL ========== */
+@media (max-width: 768px) {
+    .user-menu-trigger {
+        padding: 4px 8px;
+        gap: 6px;
+    }
+
+    .user-avatar {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+    }
+
+    .user-avatar i {
+        font-size: 14px;
+    }
+
+    .user-name {
+        font-size: 12px;
+        max-width: 80px;
+    }
+
+    .user-dropdown {
+        position: fixed;
+        top: auto;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        width: auto;
+        max-width: none;
+        border-radius: 20px;
+    }
+
+    .user-dropdown-header {
+        padding: 14px;
+    }
+
+    .user-dropdown-avatar {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        font-size: 20px;
+    }
+
+    .user-dropdown-item {
+        padding: 12px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-name {
+        display: none;
+    }
+
+    .user-menu-trigger {
+        padding: 6px;
+        gap: 0;
+    }
+
+    .user-menu-trigger .fa-chevron-down {
+        display: none;
+    }
+}
