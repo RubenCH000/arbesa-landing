@@ -40,8 +40,41 @@
                 <button id="themeToggle" class="btn-theme">
                     <i class="fas fa-moon"></i>
                 </button>
-                <a href="#" class="btn btn-outline" id="loginBtn">Iniciar Sesión</a>
-                <a href="#" class="btn btn-primary" id="registerBtn">Registrarse</a>
+
+                <!-- Botones de login/registro (visibles cuando NO hay sesión) -->
+                <div id="authButtons">
+                    <a href="#" class="btn btn-outline" id="loginBtn">Iniciar Sesión</a>
+                    <a href="#" class="btn btn-primary" id="registerBtn">Registrarse</a>
+                </div>
+
+                <!-- Menú de usuario (visible cuando HAY sesión) -->
+                <div id="userMenu" style="display: none;" class="user-menu-container">
+                    <div class="user-menu-trigger" id="userMenuTrigger">
+                        <div class="user-avatar" id="userAvatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <span id="userNameDisplay" class="user-name"></span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-dropdown-header">
+                            <div class="user-dropdown-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="user-dropdown-info">
+                                <span id="dropdownUserName" class="dropdown-name"></span>
+                                <span id="dropdownUserEmail" class="dropdown-email"></span>
+                            </div>
+                        </div>
+                        <div class="user-dropdown-divider"></div>
+                        <a href="#" id="userChangePasswordBtn" class="user-dropdown-item">
+                            <i class="fas fa-key"></i> Cambiar contraseña
+                        </a>
+                        <a href="#" id="userLogoutBtn" class="user-dropdown-item logout">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="menu-toggle" id="menuToggle">
                 <i class="fas fa-bars"></i>
@@ -106,7 +139,6 @@
                 <p class="section-subtitle">Diseñados para empresas que buscan eficiencia y control total</p>
             </div>
             <div class="products-grid">
-                <!-- Help Desk SaaS -->
                 <div class="product-card">
                     <div class="product-badge">SaaS</div>
                     <div class="product-icon">
@@ -135,7 +167,6 @@
                     </div>
                 </div>
 
-                <!-- Gestor de Inventarios Desktop -->
                 <div class="product-card">
                     <div class="product-badge">Escritorio</div>
                     <div class="product-icon">
@@ -177,52 +208,40 @@
             </div>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                    </div>
+                    <div class="feature-icon"><i class="fas fa-cloud-upload-alt"></i></div>
                     <h3>100% Cloud</h3>
-                    <p>Accede desde cualquier lugar, en cualquier momento. Sin instalaciones complicadas.</p>
+                    <p>Accede desde cualquier lugar.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
                     <h3>Seguridad garantizada</h3>
-                    <p>Tus datos están protegidos con los más altos estándares de seguridad.</p>
+                    <p>Tus datos protegidos.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
                     <h3>Reportes en tiempo real</h3>
-                    <p>Toma decisiones basadas en datos actualizados al instante.</p>
+                    <p>Decisiones basadas en datos.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
+                    <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
                     <h3>Multiplataforma</h3>
-                    <p>Disponible en Web, iOS y Android. Gestiona desde cualquier dispositivo.</p>
+                    <p>Web, iOS y Android.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
                     <h3>Soporte 24/7</h3>
-                    <p>Nuestro equipo está siempre disponible para ayudarte.</p>
+                    <p>Siempre disponibles.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-sync-alt"></i>
-                    </div>
+                    <div class="feature-icon"><i class="fas fa-sync-alt"></i></div>
                     <h3>Actualizaciones constantes</h3>
-                    <p>Siempre tendrás las últimas funcionalidades sin costo adicional.</p>
+                    <p>Siempre actualizado.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- DEMO PREVIEW -->
+    <!-- DEMO PREVIEW HELP DESK -->
     <section id="demo-helpdesk" class="demo-section">
         <div class="container">
             <div class="demo-content">
@@ -241,24 +260,18 @@
                 </div>
                 <div class="demo-image">
                     <div class="mockup-window">
-                        <div class="mockup-bar">
-                            <span class="dot red"></span>
-                            <span class="dot yellow"></span>
-                            <span class="dot green"></span>
-                            <span class="mockup-title">Dashboard - ARBESA Help Desk</span>
+                        <div class="mockup-bar"><span class="dot red"></span><span class="dot yellow"></span><span
+                                class="dot green"></span><span class="mockup-title">Dashboard - ARBESA Help Desk</span>
                         </div>
-                        <div class="mockup-content">
-                            <i class="fas fa-chart-line"></i>
-                            <i class="fas fa-users"></i>
-                            <i class="fas fa-ticket-alt"></i>
-                            <i class="fas fa-chart-pie"></i>
-                        </div>
+                        <div class="mockup-content"><i class="fas fa-chart-line"></i><i class="fas fa-users"></i><i
+                                class="fas fa-ticket-alt"></i><i class="fas fa-chart-pie"></i></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- DEMO PREVIEW INVENTARIO -->
     <section id="demo-inventario" class="demo-section alt">
         <div class="container">
             <div class="demo-content reverse">
@@ -276,18 +289,10 @@
                 </div>
                 <div class="demo-image">
                     <div class="mockup-window">
-                        <div class="mockup-bar">
-                            <span class="dot red"></span>
-                            <span class="dot yellow"></span>
-                            <span class="dot green"></span>
-                            <span class="mockup-title">ARBESA Inventario</span>
-                        </div>
-                        <div class="mockup-content">
-                            <i class="fas fa-boxes"></i>
-                            <i class="fas fa-barcode"></i>
-                            <i class="fas fa-file-pdf"></i>
-                            <i class="fas fa-chart-bar"></i>
-                        </div>
+                        <div class="mockup-bar"><span class="dot red"></span><span class="dot yellow"></span><span
+                                class="dot green"></span><span class="mockup-title">ARBESA Inventario</span></div>
+                        <div class="mockup-content"><i class="fas fa-boxes"></i><i class="fas fa-barcode"></i><i
+                                class="fas fa-file-pdf"></i><i class="fas fa-chart-bar"></i></div>
                     </div>
                 </div>
             </div>
@@ -306,71 +311,47 @@
                 <div class="pricing-card">
                     <div class="pricing-header">
                         <h3>Básico</h3>
-                        <div class="price">
-                            <span class="currency">$</span>
-                            <span class="amount">29</span>
-                            <span class="period">/mes</span>
-                        </div>
+                        <div class="price"><span class="currency">$</span><span class="amount">29</span><span
+                                class="period">/mes</span></div>
                         <p>Ideal para pequeñas empresas</p>
                     </div>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> Hasta 50 clientes</li>
                         <li><i class="fas fa-check"></i> 5 técnicos</li>
-                        <li><i class="fas fa-check"></i> Gestión de tickets</li>
                         <li><i class="fas fa-check"></i> Reportes básicos</li>
-                        <li><i class="fas fa-check"></i> Soporte por email</li>
                         <li><i class="fas fa-times"></i> API personalizada</li>
-                        <li><i class="fas fa-times"></i> App móvil</li>
-                    </ul>
-                    <a href="#" class="btn btn-primary btn-block"
+                    </ul><a href="#" class="btn btn-primary btn-block"
                         onclick="checkAndBuy(event, 'Básico Help Desk', '29', 'helpdesk')">Comprar ahora</a>
                 </div>
-
                 <div class="pricing-card featured">
                     <div class="popular-badge">Más popular</div>
                     <div class="pricing-header">
                         <h3>Profesional</h3>
-                        <div class="price">
-                            <span class="currency">$</span>
-                            <span class="amount">79</span>
-                            <span class="period">/mes</span>
-                        </div>
+                        <div class="price"><span class="currency">$</span><span class="amount">79</span><span
+                                class="period">/mes</span></div>
                         <p>Perfecto para empresas en crecimiento</p>
                     </div>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> Hasta 500 clientes</li>
                         <li><i class="fas fa-check"></i> 20 técnicos</li>
-                        <li><i class="fas fa-check"></i> Gestión avanzada de tickets</li>
                         <li><i class="fas fa-check"></i> Reportes avanzados</li>
-                        <li><i class="fas fa-check"></i> Soporte prioritario 24/7</li>
                         <li><i class="fas fa-check"></i> API personalizada</li>
-                        <li><i class="fas fa-check"></i> App móvil para técnicos</li>
-                    </ul>
-                    <a href="#" class="btn btn-primary btn-block"
+                    </ul><a href="#" class="btn btn-primary btn-block"
                         onclick="checkAndBuy(event, 'Profesional Help Desk', '79', 'helpdesk')">Comprar ahora</a>
                 </div>
-
                 <div class="pricing-card">
                     <div class="pricing-header">
                         <h3>Empresarial</h3>
-                        <div class="price">
-                            <span class="currency">$</span>
-                            <span class="amount">199</span>
-                            <span class="period">/mes</span>
-                        </div>
+                        <div class="price"><span class="currency">$</span><span class="amount">199</span><span
+                                class="period">/mes</span></div>
                         <p>Para grandes corporaciones</p>
                     </div>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> Clientes ilimitados</li>
                         <li><i class="fas fa-check"></i> Técnicos ilimitados</li>
-                        <li><i class="fas fa-check"></i> Automatización completa</li>
                         <li><i class="fas fa-check"></i> Reportes a medida</li>
-                        <li><i class="fas fa-check"></i> Soporte dedicado 24/7</li>
                         <li><i class="fas fa-check"></i> API personalizada</li>
-                        <li><i class="fas fa-check"></i> App móvil white label</li>
-                        <li><i class="fas fa-check"></i> Implementación asistida</li>
-                    </ul>
-                    <a href="#" class="btn btn-primary btn-block"
+                    </ul><a href="#" class="btn btn-primary btn-block"
                         onclick="checkAndBuy(event, 'Empresarial Help Desk', '199', 'helpdesk')">Comprar ahora</a>
                 </div>
             </div>
@@ -389,73 +370,47 @@
                 <div class="pricing-card">
                     <div class="pricing-header">
                         <h3>Básico</h3>
-                        <div class="price">
-                            <span class="currency">$</span>
-                            <span class="amount">19</span>
-                            <span class="period">/mes</span>
-                        </div>
+                        <div class="price"><span class="currency">$</span><span class="amount">19</span><span
+                                class="period">/mes</span></div>
                         <p>Para negocios pequeños</p>
                     </div>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> Hasta 500 productos</li>
-                        <li><i class="fas fa-check"></i> Control de entradas/salidas</li>
-                        <li><i class="fas fa-check"></i> Reportes básicos en PDF</li>
                         <li><i class="fas fa-check"></i> 1 usuario</li>
-                        <li><i class="fas fa-check"></i> Soporte por email</li>
+                        <li><i class="fas fa-check"></i> Reportes básicos PDF</li>
                         <li><i class="fas fa-times"></i> Código de barras</li>
-                        <li><i class="fas fa-times"></i> Múltiples sucursales</li>
-                    </ul>
-                    <a href="#" class="btn btn-primary btn-block"
+                    </ul><a href="#" class="btn btn-primary btn-block"
                         onclick="checkAndBuy(event, 'Básico VitaStock', '19', 'vitastock')">Comprar ahora</a>
                 </div>
-
                 <div class="pricing-card featured">
                     <div class="popular-badge">Más popular</div>
                     <div class="pricing-header">
                         <h3>Profesional</h3>
-                        <div class="price">
-                            <span class="currency">$</span>
-                            <span class="amount">49</span>
-                            <span class="period">/mes</span>
-                        </div>
+                        <div class="price"><span class="currency">$</span><span class="amount">49</span><span
+                                class="period">/mes</span></div>
                         <p>Para negocios en crecimiento</p>
                     </div>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> Hasta 5,000 productos</li>
-                        <li><i class="fas fa-check"></i> Control de entradas/salidas</li>
-                        <li><i class="fas fa-check"></i> Reportes avanzados PDF/Excel</li>
                         <li><i class="fas fa-check"></i> Hasta 3 usuarios</li>
-                        <li><i class="fas fa-check"></i> Soporte prioritario</li>
                         <li><i class="fas fa-check"></i> Código de barras</li>
                         <li><i class="fas fa-check"></i> Alertas de stock mínimo</li>
-                        <li><i class="fas fa-times"></i> Múltiples sucursales</li>
-                    </ul>
-                    <a href="#" class="btn btn-primary btn-block"
+                    </ul><a href="#" class="btn btn-primary btn-block"
                         onclick="checkAndBuy(event, 'Profesional VitaStock', '49', 'vitastock')">Comprar ahora</a>
                 </div>
-
                 <div class="pricing-card">
                     <div class="pricing-header">
                         <h3>Empresarial</h3>
-                        <div class="price">
-                            <span class="currency">$</span>
-                            <span class="amount">99</span>
-                            <span class="period">/mes</span>
-                        </div>
+                        <div class="price"><span class="currency">$</span><span class="amount">99</span><span
+                                class="period">/mes</span></div>
                         <p>Para grandes empresas</p>
                     </div>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> Productos ilimitados</li>
-                        <li><i class="fas fa-check"></i> Control de entradas/salidas</li>
-                        <li><i class="fas fa-check"></i> Reportes personalizados</li>
                         <li><i class="fas fa-check"></i> Usuarios ilimitados</li>
-                        <li><i class="fas fa-check"></i> Soporte 24/7</li>
-                        <li><i class="fas fa-check"></i> Código de barras avanzado</li>
                         <li><i class="fas fa-check"></i> Múltiples sucursales</li>
                         <li><i class="fas fa-check"></i> API de integración</li>
-                        <li><i class="fas fa-check"></i> Capacitación incluida</li>
-                    </ul>
-                    <a href="#" class="btn btn-primary btn-block"
+                    </ul><a href="#" class="btn btn-primary btn-block"
                         onclick="checkAndBuy(event, 'Empresarial VitaStock', '99', 'vitastock')">Comprar ahora</a>
                 </div>
             </div>
@@ -467,10 +422,9 @@
         <div class="container">
             <div class="cta-content">
                 <h2>¿Listo para transformar tu negocio?</h2>
-                <p>Comienza hoy mismo con 30 días de prueba gratuita. Sin compromiso, cancela cuando quieras.</p>
-                <a href="#contacto" class="btn btn-large btn-primary">
-                    <i class="fas fa-calendar-alt"></i> Probar gratis
-                </a>
+                <p>Comienza hoy mismo con 30 días de prueba gratuita.</p>
+                <a href="#contacto" class="btn btn-large btn-primary"><i class="fas fa-calendar-alt"></i> Probar
+                    gratis</a>
             </div>
         </div>
     </section>
@@ -485,53 +439,37 @@
             </div>
             <div class="contact-grid">
                 <div class="contact-info">
-                    <div class="contact-card">
-                        <i class="fas fa-envelope"></i>
+                    <div class="contact-card"><i class="fas fa-envelope"></i>
                         <h4>Email</h4>
                         <p>arbesasystem@gmail.com</p>
                     </div>
-                    <div class="contact-card">
-                        <i class="fas fa-phone-alt"></i>
+                    <div class="contact-card"><i class="fas fa-phone-alt"></i>
                         <h4>Teléfono</h4>
                         <p>+52 238 195 1301</p>
                     </div>
-                    <div class="contact-card">
-                        <i class="fab fa-whatsapp"></i>
+                    <div class="contact-card"><i class="fab fa-whatsapp"></i>
                         <h4>WhatsApp</h4>
                         <p>+52 238 195 1301</p>
                     </div>
-                    <div class="contact-card">
-                        <i class="fab fa-facebook"></i>
+                    <div class="contact-card"><i class="fab fa-facebook"></i>
                         <h4>Redes Sociales</h4>
-                        <div class="social-contact">
-                            <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
-                            <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
-                        </div>
+                        <div class="social-contact"><a href="#"><i class="fab fa-facebook"></i> Facebook</a><a
+                                href="#"><i class="fab fa-instagram"></i> Instagram</a></div>
                     </div>
                 </div>
                 <div class="contact-form">
                     <form id="contactForm">
-                        <div class="form-group">
-                            <input type="text" placeholder="Nombre completo" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" placeholder="Correo electrónico" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="tel" placeholder="Teléfono">
-                        </div>
-                        <div class="form-group">
-                            <select>
+                        <div class="form-group"><input type="text" placeholder="Nombre completo" required></div>
+                        <div class="form-group"><input type="email" placeholder="Correo electrónico" required></div>
+                        <div class="form-group"><input type="tel" placeholder="Teléfono"></div>
+                        <div class="form-group"><select>
                                 <option value="">¿Qué producto te interesa?</option>
                                 <option value="helpdesk">Help Desk SaaS</option>
                                 <option value="inventario">Gestor de Inventarios</option>
                                 <option value="ambos">Ambos</option>
-                                <option value="otro">Otro proyecto</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <textarea rows="4" placeholder="Cuéntanos sobre tu proyecto..."></textarea>
-                        </div>
+                            </select></div>
+                        <div class="form-group"><textarea rows="4"
+                                placeholder="Cuéntanos sobre tu proyecto..."></textarea></div>
                         <button type="submit" class="btn btn-primary btn-block">Enviar mensaje</button>
                     </form>
                 </div>
@@ -543,9 +481,9 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-brand">
-                    <img src="assets/images/logo-claro.png" alt="ARBESA SYSTEMS" class="footer-logo logo-light">
-                    <img src="assets/images/logo-oscuro.png" alt="ARBESA SYSTEMS" class="footer-logo logo-dark">
+                <div class="footer-brand"><img src="assets/images/logo-claro.png" alt="ARBESA SYSTEMS"
+                        class="footer-logo logo-light"><img src="assets/images/logo-oscuro.png" alt="ARBESA SYSTEMS"
+                        class="footer-logo logo-dark">
                     <p>Soluciones de software que impulsan tu negocio.</p>
                 </div>
                 <div class="footer-links">
@@ -560,16 +498,14 @@
                     <ul>
                         <li><a href="#inicio">Inicio</a></li>
                         <li><a href="#caracteristicas">Características</a></li>
-                        <li><a href="#precios">Precios</a></li>
+                        <li><a href="#precios-helpdesk">Precios</a></li>
                         <li><a href="#contacto">Contacto</a></li>
                     </ul>
                 </div>
                 <div class="footer-social">
                     <h4>Síguenos</h4>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
+                    <div class="social-icons"><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i
+                                class="fab fa-instagram"></i></a></div>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -582,49 +518,34 @@
     <div id="authModal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="modal-close" id="closeModal">&times;</span>
-
             <div id="loginForm">
                 <h3 class="modal-title">Iniciar Sesión</h3>
                 <form id="loginSubmit">
-                    <div class="form-group">
-                        <input type="email" id="loginEmail" placeholder="Correo electrónico" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" id="loginPassword" placeholder="Contraseña" required>
+                    <div class="form-group"><input type="email" id="loginEmail" placeholder="Correo electrónico"
+                            required></div>
+                    <div class="form-group"><input type="password" id="loginPassword" placeholder="Contraseña" required>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
                 </form>
-                <div class="modal-footer">
-                    ¿No tienes cuenta? <a id="showRegister">Regístrate aquí</a>
-                </div>
+                <div class="modal-footer">¿No tienes cuenta? <a id="showRegister">Regístrate aquí</a></div>
             </div>
-
             <div id="registerForm" style="display: none;">
                 <h3 class="modal-title">Crear cuenta</h3>
-                <button onclick="loginWithGoogle()" class="btn-google">
-                    <i class="fab fa-google"></i> Registrarse con Google
-                </button>
-                <div class="divider">
-                    <span>o</span>
-                </div>
+                <button onclick="window.loginWithGoogle()" class="btn-google"><i class="fab fa-google"></i> Registrarse
+                    con Google</button>
+                <div class="divider"><span>o</span></div>
                 <form id="registerSubmit">
-                    <div class="form-group">
-                        <input type="text" id="regName" placeholder="Nombre completo" required>
+                    <div class="form-group"><input type="text" id="regName" placeholder="Nombre completo" required>
                     </div>
-                    <div class="form-group">
-                        <input type="email" id="regEmail" placeholder="Correo electrónico" required>
+                    <div class="form-group"><input type="email" id="regEmail" placeholder="Correo electrónico" required>
                     </div>
-                    <div class="form-group">
-                        <input type="password" id="regPassword" placeholder="Contraseña" required>
+                    <div class="form-group"><input type="password" id="regPassword" placeholder="Contraseña" required>
                     </div>
-                    <div class="form-group">
-                        <input type="password" id="regConfirmPassword" placeholder="Confirmar contraseña" required>
-                    </div>
+                    <div class="form-group"><input type="password" id="regConfirmPassword"
+                            placeholder="Confirmar contraseña" required></div>
                     <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
                 </form>
-                <div class="modal-footer">
-                    ¿Ya tienes cuenta? <a id="showLogin">Inicia sesión aquí</a>
-                </div>
+                <div class="modal-footer">¿Ya tienes cuenta? <a id="showLogin">Inicia sesión aquí</a></div>
             </div>
         </div>
     </div>
@@ -632,9 +553,7 @@
     <!-- MODAL NOTIFICACIÓN -->
     <div id="notificationModal" class="notification-modal">
         <div class="notification-content">
-            <div class="notification-icon" id="notificationIcon">
-                <i class="fas fa-check-circle"></i>
-            </div>
+            <div class="notification-icon" id="notificationIcon"><i class="fas fa-check-circle"></i></div>
             <h3 class="notification-title" id="notificationTitle">Título</h3>
             <p class="notification-message" id="notificationMessage">Mensaje</p>
             <div class="notification-details" id="notificationDetails" style="display: none;"></div>
@@ -642,7 +561,112 @@
         </div>
     </div>
 
-    <!-- SCRIPTS -->
+    <!-- MODAL CAMBIAR CONTRASEÑA -->
+    <div id="changePasswordModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="modal-close" id="closePasswordModal">&times;</span>
+            <h3 class="modal-title">Cambiar contraseña</h3>
+            <form id="changePasswordForm">
+                <div class="form-group"><input type="password" id="currentPassword" placeholder="Contraseña actual"
+                        required></div>
+                <div class="form-group"><input type="password" id="newPassword" placeholder="Nueva contraseña" required>
+                </div>
+                <div class="form-group"><input type="password" id="confirmNewPassword"
+                        placeholder="Confirmar nueva contraseña" required></div>
+                <button type="submit" class="btn btn-primary btn-block">Actualizar contraseña</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FIREBASE Y SCRIPTS -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import {
+            getAuth,
+            signInWithPopup,
+            GoogleAuthProvider,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            updatePassword,
+            sendPasswordResetEmail,
+            onAuthStateChanged
+        } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB8CTljs84r5ImivVrSaAeITcs2jWRFDCM",
+            authDomain: "arbesa-landing.firebaseapp.com",
+            projectId: "arbesa-landing",
+            storageBucket: "arbesa-landing.firebasestorage.app",
+            messagingSenderId: "752993027681",
+            appId: "1:752993027681:web:0ad57cefc7ed9a97388c20"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // Funciones globales para Firebase
+        window.createUserWithEmail = async (email, password, name) => {
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                return { success: true, user: userCredential.user, name: name };
+            } catch (error) {
+                return { success: false, error: error };
+            }
+        };
+
+        window.signInWithEmail = async (email, password) => {
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                return { success: true, user: userCredential.user };
+            } catch (error) {
+                return { success: false, error: error };
+            }
+        };
+
+        window.loginWithGoogle = async function () {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                localStorage.setItem('user', JSON.stringify({
+                    name: user.displayName,
+                    email: user.email,
+                    uid: user.uid,
+                    fromGoogle: true
+                }));
+                if (typeof updateUserMenu === 'function') updateUserMenu();
+                const pendingPlan = localStorage.getItem('pendingPlan');
+                if (pendingPlan) {
+                    const plan = JSON.parse(pendingPlan);
+                    localStorage.removeItem('pendingPlan');
+                    window.location.href = `checkout.html?plan=${encodeURIComponent(plan.name)}&price=${plan.price}&type=${plan.type}`;
+                } else {
+                    document.getElementById('authModal').style.display = 'none';
+                    if (typeof showNotification === 'function') {
+                        showNotification('success', '¡Bienvenido!', `Hola ${user.displayName}, has iniciado sesión correctamente.`);
+                    }
+                }
+            } catch (error) {
+                console.error(error);
+                if (typeof showNotification === 'function') {
+                    showNotification('error', 'Error', error.message);
+                }
+            }
+        };
+
+        window.updateUserPassword = async (currentPassword, newPassword) => {
+            const user = auth.currentUser;
+            if (!user) return { success: false, error: 'No hay usuario logueado' };
+            try {
+                const credential = await signInWithEmailAndPassword(auth, user.email, currentPassword);
+                await updatePassword(credential.user, newPassword);
+                return { success: true };
+            } catch (error) {
+                return { success: false, error: error };
+            }
+        };
+    </script>
+
     <script>
         // ========== FUNCIONES DE NOTIFICACIÓN ==========
         function showNotification(type, title, message, details = null, redirectUrl = null) {
@@ -654,75 +678,54 @@
             const btn = document.getElementById('notificationBtn');
 
             icon.className = 'notification-icon ' + type;
-            switch (type) {
-                case 'success':
-                    icon.innerHTML = '<i class="fas fa-check-circle"></i>';
-                    break;
-                case 'error':
-                    icon.innerHTML = '<i class="fas fa-times-circle"></i>';
-                    break;
-                case 'warning':
-                    icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
-                    break;
-                case 'info':
-                    icon.innerHTML = '<i class="fas fa-info-circle"></i>';
-                    break;
-            }
+            const icons = { success: 'fa-check-circle', error: 'fa-times-circle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle' };
+            icon.innerHTML = `<i class="fas ${icons[type] || 'fa-info-circle'}"></i>`;
 
             titleEl.textContent = title;
             messageEl.textContent = message;
-
-            if (details) {
-                detailsEl.style.display = 'block';
-                detailsEl.innerHTML = details;
-            } else {
-                detailsEl.style.display = 'none';
-            }
+            detailsEl.style.display = details ? 'block' : 'none';
+            if (details) detailsEl.innerHTML = details;
 
             modal.classList.add('active');
-
-            btn.onclick = function () {
+            btn.onclick = () => {
                 modal.classList.remove('active');
-                if (redirectUrl) {
-                    window.location.href = redirectUrl;
-                }
+                if (redirectUrl) window.location.href = redirectUrl;
             };
+            modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
+        }
 
-            modal.onclick = function (e) {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                    if (redirectUrl) {
-                        window.location.href = redirectUrl;
-                    }
-                }
-            };
+        // ========== ACTUALIZAR MENÚ DE USUARIO ==========
+        function updateUserMenu() {
+            const user = localStorage.getItem('user');
+            const authButtons = document.getElementById('authButtons');
+            const userMenu = document.getElementById('userMenu');
+            const userNameDisplay = document.getElementById('userNameDisplay');
+            const dropdownUserName = document.getElementById('dropdownUserName');
+            const dropdownUserEmail = document.getElementById('dropdownUserEmail');
+
+            if (user) {
+                const userData = JSON.parse(user);
+                authButtons.style.display = 'none';
+                userMenu.style.display = 'flex';
+                userNameDisplay.textContent = userData.name?.split(' ')[0] || userData.email?.split('@')[0] || 'Usuario';
+                dropdownUserName.textContent = userData.name || 'Usuario';
+                dropdownUserEmail.textContent = userData.email || '';
+            } else {
+                authButtons.style.display = 'flex';
+                userMenu.style.display = 'none';
+            }
         }
 
         // ========== CHECK AND BUY ==========
         window.checkAndBuy = function (event, planName, planPrice, productType) {
             event.preventDefault();
-            console.log('🟢 Comprar clicked:', planName, planPrice, productType);
-
             const user = localStorage.getItem('user');
-            const isLoggedIn = user && JSON.parse(user).email;
-
-            if (!isLoggedIn) {
-                localStorage.setItem('pendingPlan', JSON.stringify({
-                    name: planName,
-                    price: planPrice,
-                    type: productType
-                }));
-
+            if (!user) {
+                localStorage.setItem('pendingPlan', JSON.stringify({ name: planName, price: planPrice, type: productType }));
                 const modal = document.getElementById('authModal');
-                const loginForm = document.getElementById('loginForm');
-                const registerForm = document.getElementById('registerForm');
-                if (modal) {
-                    loginForm.style.display = 'none';
-                    registerForm.style.display = 'block';
-                    modal.style.display = 'flex';
-                } else {
-                    alert('Por favor inicia sesión o regístrate primero');
-                }
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('registerForm').style.display = 'block';
+                modal.style.display = 'flex';
             } else {
                 window.location.href = `checkout.html?plan=${encodeURIComponent(planName)}&price=${planPrice}&type=${productType}`;
             }
@@ -730,6 +733,8 @@
 
         // ========== MODAL LOGIN/REGISTRO ==========
         document.addEventListener('DOMContentLoaded', function () {
+            updateUserMenu();
+
             const modal = document.getElementById('authModal');
             const loginBtn = document.getElementById('loginBtn');
             const registerBtn = document.getElementById('registerBtn');
@@ -739,157 +744,168 @@
             const loginForm = document.getElementById('loginForm');
             const registerForm = document.getElementById('registerForm');
 
-            if (loginBtn) {
-                loginBtn.onclick = function (e) {
-                    e.preventDefault();
-                    if (modal) {
-                        loginForm.style.display = 'block';
-                        registerForm.style.display = 'none';
-                        modal.style.display = 'flex';
-                    }
-                };
-            }
-
-            if (registerBtn) {
-                registerBtn.onclick = function (e) {
-                    e.preventDefault();
-                    if (modal) {
-                        loginForm.style.display = 'none';
-                        registerForm.style.display = 'block';
-                        modal.style.display = 'flex';
-                    }
-                };
-            }
-
-            if (closeModal) {
-                closeModal.onclick = function () {
-                    if (modal) modal.style.display = 'none';
-                };
-            }
-
-            if (showRegister) {
-                showRegister.onclick = function (e) {
-                    e.preventDefault();
-                    loginForm.style.display = 'none';
-                    registerForm.style.display = 'block';
-                };
-            }
-
-            if (showLogin) {
-                showLogin.onclick = function (e) {
-                    e.preventDefault();
-                    loginForm.style.display = 'block';
-                    registerForm.style.display = 'none';
-                };
-            }
-
-            window.onclick = function (e) {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                }
-            };
+            if (loginBtn) loginBtn.onclick = (e) => { e.preventDefault(); loginForm.style.display = 'block'; registerForm.style.display = 'none'; modal.style.display = 'flex'; };
+            if (registerBtn) registerBtn.onclick = (e) => { e.preventDefault(); loginForm.style.display = 'none'; registerForm.style.display = 'block'; modal.style.display = 'flex'; };
+            if (closeModal) closeModal.onclick = () => modal.style.display = 'none';
+            if (showRegister) showRegister.onclick = (e) => { e.preventDefault(); loginForm.style.display = 'none'; registerForm.style.display = 'block'; };
+            if (showLogin) showLogin.onclick = (e) => { e.preventDefault(); loginForm.style.display = 'block'; registerForm.style.display = 'none'; };
+            window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
         });
 
-        // ========== REGISTRO ==========
+        // ========== REGISTRO CON FIREBASE ==========
         const registerSubmit = document.getElementById('registerSubmit');
         if (registerSubmit) {
-            registerSubmit.onsubmit = function (e) {
+            registerSubmit.onsubmit = async function (e) {
                 e.preventDefault();
                 const name = document.getElementById('regName').value;
                 const email = document.getElementById('regEmail').value;
                 const password = document.getElementById('regPassword').value;
                 const confirm = document.getElementById('regConfirmPassword').value;
 
-                if (password !== confirm) {
-                    showNotification('error', 'Error', 'Las contraseñas no coinciden');
-                    return;
-                }
+                if (password !== confirm) return showNotification('error', 'Error', 'Las contraseñas no coinciden');
+                if (password.length < 6) return showNotification('error', 'Error', 'La contraseña debe tener al menos 6 caracteres');
 
-                if (password.length < 6) {
-                    showNotification('error', 'Error', 'La contraseña debe tener al menos 6 caracteres');
-                    return;
-                }
-
-                // Guardar usuario
-                const user = { name: name, email: email, password: password };
-                localStorage.setItem('user', JSON.stringify(user));
-
-                // Verificar plan pendiente
-                const pendingPlan = localStorage.getItem('pendingPlan');
-                if (pendingPlan) {
-                    const plan = JSON.parse(pendingPlan);
-                    localStorage.removeItem('pendingPlan');
-                    document.getElementById('authModal').style.display = 'none';
-                    window.location.href = `checkout.html?plan=${encodeURIComponent(plan.name)}&price=${plan.price}&type=${plan.type}`;
+                const result = await window.createUserWithEmail(email, password, name);
+                if (result.success) {
+                    localStorage.setItem('user', JSON.stringify({ name: name, email: email, uid: result.user.uid }));
+                    updateUserMenu();
+                    const pendingPlan = localStorage.getItem('pendingPlan');
+                    if (pendingPlan) {
+                        const plan = JSON.parse(pendingPlan);
+                        localStorage.removeItem('pendingPlan');
+                        document.getElementById('authModal').style.display = 'none';
+                        window.location.href = `checkout.html?plan=${encodeURIComponent(plan.name)}&price=${plan.price}&type=${plan.type}`;
+                    } else {
+                        document.getElementById('authModal').style.display = 'none';
+                        showNotification('success', '¡Registro exitoso!', `Bienvenido ${name}, tu cuenta ha sido creada en Firebase.`);
+                    }
+                    document.getElementById('registerForm').reset();
                 } else {
-                    document.getElementById('authModal').style.display = 'none';
-                    showNotification('success', '¡Registro exitoso!', `Bienvenido ${name}, tu cuenta ha sido creada.`);
+                    if (result.error.code === 'auth/email-already-in-use') {
+                        showNotification('error', 'Error', 'Este correo ya está registrado');
+                    } else {
+                        showNotification('error', 'Error', result.error.message);
+                    }
                 }
-                document.getElementById('registerForm').reset();
             };
         }
 
-        // ========== LOGIN ==========
+        // ========== LOGIN CON FIREBASE ==========
         const loginSubmit = document.getElementById('loginSubmit');
         if (loginSubmit) {
-            loginSubmit.onsubmit = function (e) {
+            loginSubmit.onsubmit = async function (e) {
                 e.preventDefault();
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
 
-                const savedUser = localStorage.getItem('user');
-                if (savedUser) {
-                    const user = JSON.parse(savedUser);
-                    if (user.email === email && user.password === password) {
-                        const pendingPlan = localStorage.getItem('pendingPlan');
-                        if (pendingPlan) {
-                            const plan = JSON.parse(pendingPlan);
-                            localStorage.removeItem('pendingPlan');
-                            document.getElementById('authModal').style.display = 'none';
-                            window.location.href = `checkout.html?plan=${encodeURIComponent(plan.name)}&price=${plan.price}&type=${plan.type}`;
-                        } else {
-                            document.getElementById('authModal').style.display = 'none';
-                            showNotification('success', '¡Sesión iniciada!', `Bienvenido de nuevo ${user.name || email}`);
-                        }
+                const result = await window.signInWithEmail(email, password);
+                if (result.success) {
+                    let userName = email.split('@')[0];
+                    const localUser = localStorage.getItem('user');
+                    if (localUser) userName = JSON.parse(localUser).name || userName;
+                    localStorage.setItem('user', JSON.stringify({ name: userName, email: email, uid: result.user.uid }));
+                    updateUserMenu();
+                    const pendingPlan = localStorage.getItem('pendingPlan');
+                    if (pendingPlan) {
+                        const plan = JSON.parse(pendingPlan);
+                        localStorage.removeItem('pendingPlan');
+                        document.getElementById('authModal').style.display = 'none';
+                        window.location.href = `checkout.html?plan=${encodeURIComponent(plan.name)}&price=${plan.price}&type=${plan.type}`;
                     } else {
-                        showNotification('error', 'Error', 'Correo o contraseña incorrectos');
+                        document.getElementById('authModal').style.display = 'none';
+                        showNotification('success', '¡Sesión iniciada!', `Bienvenido de nuevo ${userName}`);
                     }
+                    document.getElementById('loginForm').reset();
                 } else {
-                    showNotification('error', 'Error', 'No hay cuenta registrada con este correo');
+                    if (result.error.code === 'auth/user-not-found') {
+                        showNotification('error', 'Error', 'No existe una cuenta con este correo');
+                    } else if (result.error.code === 'auth/wrong-password') {
+                        showNotification('error', 'Error', 'Contraseña incorrecta');
+                    } else {
+                        showNotification('error', 'Error', result.error.message);
+                    }
                 }
-                document.getElementById('loginForm').reset();
+            };
+        }
+
+        // ========== MENÚ DE USUARIO ==========
+        const userMenuTrigger = document.getElementById('userMenuTrigger');
+        const userDropdown = document.getElementById('userDropdown');
+        if (userMenuTrigger) {
+            userMenuTrigger.onclick = (e) => { e.stopPropagation(); userDropdown.classList.toggle('active'); };
+            document.addEventListener('click', () => userDropdown.classList.remove('active'));
+        }
+
+        // Cambiar contraseña
+        const userChangePasswordBtn = document.getElementById('userChangePasswordBtn');
+        const changePasswordModal = document.getElementById('changePasswordModal');
+        const closePasswordModal = document.getElementById('closePasswordModal');
+
+        if (userChangePasswordBtn) {
+            userChangePasswordBtn.onclick = (e) => {
+                e.preventDefault();
+                changePasswordModal.style.display = 'flex';
+                userDropdown.classList.remove('active');
+            };
+        }
+        if (closePasswordModal) closePasswordModal.onclick = () => changePasswordModal.style.display = 'none';
+        window.onclick = (e) => { if (e.target === changePasswordModal) changePasswordModal.style.display = 'none'; };
+
+        const changePasswordForm = document.getElementById('changePasswordForm');
+        if (changePasswordForm) {
+            changePasswordForm.onsubmit = async function (e) {
+                e.preventDefault();
+                const current = document.getElementById('currentPassword').value;
+                const newPass = document.getElementById('newPassword').value;
+                const confirm = document.getElementById('confirmNewPassword').value;
+
+                if (newPass !== confirm) return showNotification('error', 'Error', 'Las contraseñas nuevas no coinciden');
+                if (newPass.length < 6) return showNotification('error', 'Error', 'La nueva contraseña debe tener al menos 6 caracteres');
+
+                const result = await window.updateUserPassword(current, newPass);
+                if (result.success) {
+                    const user = JSON.parse(localStorage.getItem('user'));
+                    user.password = newPass;
+                    localStorage.setItem('user', JSON.stringify(user));
+                    changePasswordModal.style.display = 'none';
+                    showNotification('success', 'Contraseña actualizada', 'Tu contraseña ha sido cambiada exitosamente.');
+                    changePasswordForm.reset();
+                } else {
+                    showNotification('error', 'Error', result.error.message || 'Contraseña actual incorrecta');
+                }
+            };
+        }
+
+        // Cerrar sesión
+        const userLogoutBtn = document.getElementById('userLogoutBtn');
+        if (userLogoutBtn) {
+            userLogoutBtn.onclick = (e) => {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                updateUserMenu();
+                showNotification('success', 'Sesión cerrada', 'Has cerrado sesión correctamente.');
+                if (userDropdown) userDropdown.classList.remove('active');
             };
         }
 
         // ========== NAVBAR SCROLL ==========
         window.addEventListener('scroll', function () {
             const navbar = document.querySelector('.navbar');
-            if (navbar) {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            }
+            if (navbar) window.scrollY > 50 ? navbar.classList.add('scrolled') : navbar.classList.remove('scrolled');
         });
 
         // ========== DARK MODE ==========
         const themeToggle = document.getElementById('themeToggle');
         if (themeToggle) {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
+            if (localStorage.getItem('theme') === 'dark') {
                 document.body.classList.add('dark-mode');
                 themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
             }
-            themeToggle.onclick = function () {
+            themeToggle.onclick = () => {
                 document.body.classList.toggle('dark-mode');
-                if (document.body.classList.contains('dark-mode')) {
-                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                    localStorage.setItem('theme', 'light');
-                }
+                const isDark = document.body.classList.contains('dark-mode');
+                themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
             };
         }
 
@@ -897,10 +913,9 @@
         const menuToggle = document.getElementById('menuToggle');
         const navMenu = document.querySelector('.nav-menu');
         const navButtons = document.querySelector('.nav-buttons');
-
         if (menuToggle) {
-            menuToggle.onclick = function () {
-                const isOpen = navMenu && navMenu.style.display === 'flex';
+            menuToggle.onclick = () => {
+                const isOpen = navMenu?.style.display === 'flex';
                 if (isOpen) {
                     if (navMenu) navMenu.style.display = 'none';
                     if (navButtons) navButtons.style.display = 'none';
@@ -914,13 +929,12 @@
                         navMenu.style.right = '0';
                         navMenu.style.backgroundColor = '#FFFFFF';
                         navMenu.style.padding = '20px';
-                        navMenu.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
                     }
                     if (navButtons) {
                         navButtons.style.display = 'flex';
                         navButtons.style.flexDirection = 'column';
                         navButtons.style.position = 'absolute';
-                        navButtons.style.top = '250px';
+                        navButtons.style.top = '300px';
                         navButtons.style.left = '0';
                         navButtons.style.right = '0';
                         navButtons.style.backgroundColor = '#FFFFFF';
@@ -935,16 +949,14 @@
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
             });
         });
 
         // ========== CONTACTO ==========
         const contactForm = document.getElementById('contactForm');
         if (contactForm) {
-            contactForm.onsubmit = function (e) {
+            contactForm.onsubmit = (e) => {
                 e.preventDefault();
                 showNotification('success', '¡Mensaje enviado!', 'Gracias por contactarnos. Pronto recibirás respuesta.');
                 contactForm.reset();
@@ -952,69 +964,226 @@
         }
     </script>
 
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+    <style>
+        .user-menu-container {
+            position: relative;
+        }
 
-        // Tu configuración de Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyB8CTljs84r5ImivVrSaAeITcs2jWRFDCM",
-            authDomain: "arbesa-landing.firebaseapp.com",
-            projectId: "arbesa-landing",
-            storageBucket: "arbesa-landing.firebasestorage.app",
-            messagingSenderId: "752993027681",
-            appId: "1:752993027681:web:0ad57cefc7ed9a97388c20"
-        };
+        .user-menu-trigger {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 40px;
+            background: var(--gray-light);
+            transition: all 0.3s;
+        }
 
-        // Inicializar Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
+        .user-menu-trigger:hover {
+            background: var(--gray-mid);
+        }
 
-        // Función para login con Google
-        window.loginWithGoogle = async function () {
-            try {
-                console.log('🟢 Iniciando login con Google...');
-                const result = await signInWithPopup(auth, provider);
-                const user = result.user;
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--cyan-turquoise);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
 
-                console.log('✅ Usuario autenticado:', user.email);
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
 
-                // Guardar usuario en localStorage
-                localStorage.setItem('user', JSON.stringify({
-                    name: user.displayName,
-                    email: user.email,
-                    uid: user.uid,
-                    photoURL: user.photoURL
-                }));
+        .user-dropdown {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            width: 280px;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
 
-                // Verificar si hay plan pendiente
-                const pendingPlan = localStorage.getItem('pendingPlan');
-                if (pendingPlan) {
-                    const plan = JSON.parse(pendingPlan);
-                    localStorage.removeItem('pendingPlan');
-                    window.location.href = `checkout.html?plan=${encodeURIComponent(plan.name)}&price=${plan.price}&type=${plan.type}`;
-                } else {
-                    showNotification('success', '¡Bienvenido!', `Hola ${user.displayName}, has iniciado sesión correctamente.`);
-                    document.getElementById('authModal').style.display = 'none';
-                }
+        .user-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+        }
 
-            } catch (error) {
-                console.error('🔴 Error en login con Google:', error);
-                showNotification('error', 'Error de autenticación', error.message);
+        .user-dropdown-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            border-bottom: 1px solid var(--gray-mid);
+        }
+
+        .user-dropdown-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--cyan-turquoise);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .dropdown-name {
+            display: block;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .dropdown-email {
+            display: block;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .user-dropdown-divider {
+            height: 1px;
+            background: var(--gray-mid);
+            margin: 0;
+        }
+
+        .user-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .user-dropdown-item:hover {
+            background: var(--gray-light);
+        }
+
+        .user-dropdown-item.logout {
+            color: #ef4444;
+        }
+
+        .user-dropdown-item.logout:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        body.dark-mode .user-dropdown {
+            background: var(--gray-light);
+        }
+
+        body.dark-mode .user-menu-trigger {
+            background: var(--gray-mid);
+        }
+
+        .notification-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 3000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .notification-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .notification-content {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            animation: modalSlideIn 0.3s ease;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
             }
-        };
 
-        // Escuchar cambios en el estado de autenticación
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                console.log('👤 Usuario logueado:', user.email);
-            } else {
-                console.log('👤 Usuario no logueado');
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
-        });
-    </script>
+        }
+
+        .notification-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 32px;
+        }
+
+        .notification-icon.success {
+            background: rgba(73, 184, 176, 0.15);
+            color: #49B8B0;
+        }
+
+        .notification-icon.error {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        .notification-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+
+        .notification-message {
+            font-size: 15px;
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+
+        .notification-btn {
+            background: var(--cyan-turquoise);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .notification-btn:hover {
+            background: var(--aqua-dark);
+        }
+    </style>
+
+    <script src="js/main.js"></script>
 
 </body>
 

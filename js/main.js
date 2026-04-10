@@ -1,27 +1,251 @@
-// ========== NAVBAR SCROLL EFFECT ==========
-document.addEventListener('DOMContentLoaded', function () {
-    const navbar = document.querySelector('.navbar');
+// ========== FUNCIONES DE NOTIFICACIÓN ==========
+function showNotification(type, title, message, details = null, redirectUrl = null) {
+    const modal = document.getElementById('notificationModal');
+    const icon = document.getElementById('notificationIcon');
+    const titleEl = document.getElementById('notificationTitle');
+    const messageEl = document.getElementById('notificationMessage');
+    const detailsEl = document.getElementById('notificationDetails');
+    const btn = document.getElementById('notificationBtn');
 
-    if (navbar) {
-        window.addEventListener('scroll', function () {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
+    icon.className = 'notification-icon ' + type;
+    const icons = { success: 'fa-check-circle', error: 'fa-times-circle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle' };
+    icon.innerHTML = `<i class="fas ${icons[type] || 'fa-info-circle'}"></i>`;
+
+    titleEl.textContent = title;
+    messageEl.textContent = message;
+    detailsEl.style.display = details ? 'block' : 'none';
+    if (details) detailsEl.innerHTML = details;
+
+    modal.classList.add('active');
+    btn.onclick = () => {
+        modal.classList.remove('active');
+        if (redirectUrl) window.location.href = redirectUrl;
+    };
+    modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('active'); };
+}
+
+// ========== ACTUALIZAR MENÚ DE USUARIO ==========
+function updateUserMenu() {
+    const user = localStorage.getItem('user');
+    const authButtons = document.getElementById('authButtons');
+    const userMenu = document.getElementById('userMenu');
+    const userNameDisplay = document.getElementById('userNameDisplay');
+    const dropdownUserName = document.getElementById('dropdownUserName');
+    const dropdownUserEmail = document.getElementById('dropdownUserEmail');
+
+    if (user) {
+        const userData = JSON.parse(user);
+        authButtons.style.display = 'none';
+        userMenu.style.display = 'flex';
+        userNameDisplay.textContent = userData.name?.split(' ')[0] || userData.email?.split('@')[0] || 'Usuario';
+        dropdownUserName.textContent = userData.name || 'Usuario';
+        dropdownUserEmail.textContent = userData.email || '';
+    } else {
+        authButtons.style.display = 'flex';
+        userMenu.style.display = 'none';
     }
+}
+
+// ========== CHECK AND BUY ==========
+window.checkAndBuy = function (event, planName, planPrice, productType) {
+    event.preventDefault();
+    const user = localStorage.getItem('user');
+    if (!user) {
+        localStorage.setItem('pendingPlan', JSON.stringify({ name: planName, price: planPrice, type: productType }));
+        const modal = document.getElementById('authModal');
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('registerForm').style.display = 'block';
+        modal.style.display = 'flex';
+    } else {
+        window.location.href = `checkout.html?plan=${encodeURIComponent(planName)}&price=${planPrice}&type=${productType}`;
+    }
+};
+
+// ========== MODAL LOGIN/REGISTRO ==========
+document.addEventListener('DOMContentLoaded', function () {
+    updateUserMenu();
+
+    const modal = document.getElementById('authModal');
+    const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    const closeModal = document.getElementById('closeModal');
+    const showRegister = document.getElementById('showRegister');
+    const showLogin = document.getElementById('showLogin');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+
+    if (loginBtn) loginBtn.onclick = (e) => { e.preventDefault(); loginForm.style.display = 'block'; registerForm.style.display = 'none'; modal.style.display = 'flex'; };
+    if (registerBtn) registerBtn.onclick = (e) => { e.preventDefault(); loginForm.style.display = 'none'; registerForm.style.display = 'block'; modal.style.display = 'flex'; };
+    if (closeModal) closeModal.onclick = () => modal.style.display = 'none';
+    if (showRegister) showRegister.onclick = (e) => { e.preventDefault(); loginForm.style.display = 'none'; registerForm.style.display = 'block'; };
+    if (showLogin) showLogin.onclick = (e) => { e.preventDefault(); loginForm.style.display = 'block'; registerForm.style.display = 'none'; };
+    window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
 });
+
+// ========== REGISTRO CON FIREBASE ==========
+const registerSubmit = document.getElementById('registerSubmit');
+if (registerSubmit) {
+    registerSubmit.onsubmit = async function (e) {
+        e.preventDefault();
+        const name = document.getElementById('regName').value;
+        const email = document.getElementById('regEmail').value;
+        const password = document.getElementById('regPassword').value;
+        const confirm = document.getElementById('regConfirmPassword').value;
+
+        if (password !== confirm) return showNotification('error', 'Error', 'Las contraseñas no coinciden');
+        if (password.length < 6) return showNotification('error', 'Error', 'La contraseña debe tener al menos 6 caracteres');
+
+        const result = await window.createUserWithEmail(email, password, name);
+        if (result.success) {
+            localStorage.setItem('user', JSON.stringify({ name: name, email: email, uid: result.user.uid }));
+            updateUserMenu();
+            const pendingPlan = localStorage.getItem('pendingPlan');
+            if (pendingPlan) {
+                const plan = JSON.parse(pendingPlan);
+                localStorage.removeItem('pendingPlan');
+                document.getElementById('authModal').style.display = 'none';
+                window.location.href = `checkout.html?plan=${encodeURIComponent(plan.name)}&price=${plan.price}&type=${plan.type}`;
+            } else {
+                document.getElementById('authModal').style.display = 'none';
+                showNotification('success', '¡Registro exitoso!', `Bienvenido ${name}, tu cuenta ha sido creada en Firebase.`);
+            }
+            document.getElementById('registerForm').reset();
+        } else {
+            if (result.error.code === 'auth/email-already-in-use') {
+                showNotification('error', 'Error', 'Este correo ya está registrado');
+            } else {
+                showNotification('error', 'Error', result.error.message);
+            }
+        }
+    };
+}
+
+// ========== LOGIN CON FIREBASE ==========
+const loginSubmit = document.getElementById('loginSubmit');
+if (loginSubmit) {
+    loginSubmit.onsubmit = async function (e) {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+
+        const result = await window.signInWithEmail(email, password);
+        if (result.success) {
+            let userName = email.split('@')[0];
+            const localUser = localStorage.getItem('user');
+            if (localUser) userName = JSON.parse(localUser).name || userName;
+            localStorage.setItem('user', JSON.stringify({ name: userName, email: email, uid: result.user.uid }));
+            updateUserMenu();
+            const pendingPlan = localStorage.getItem('pendingPlan');
+            if (pendingPlan) {
+                const plan = JSON.parse(pendingPlan);
+                localStorage.removeItem('pendingPlan');
+                document.getElementById('authModal').style.display = 'none';
+                window.location.href = `checkout.html?plan=${encodeURIComponent(plan.name)}&price=${plan.price}&type=${plan.type}`;
+            } else {
+                document.getElementById('authModal').style.display = 'none';
+                showNotification('success', '¡Sesión iniciada!', `Bienvenido de nuevo ${userName}`);
+            }
+            document.getElementById('loginForm').reset();
+        } else {
+            if (result.error.code === 'auth/user-not-found') {
+                showNotification('error', 'Error', 'No existe una cuenta con este correo');
+            } else if (result.error.code === 'auth/wrong-password') {
+                showNotification('error', 'Error', 'Contraseña incorrecta');
+            } else {
+                showNotification('error', 'Error', result.error.message);
+            }
+        }
+    };
+}
+
+// ========== MENÚ DE USUARIO ==========
+const userMenuTrigger = document.getElementById('userMenuTrigger');
+const userDropdown = document.getElementById('userDropdown');
+if (userMenuTrigger) {
+    userMenuTrigger.onclick = (e) => { e.stopPropagation(); userDropdown.classList.toggle('active'); };
+    document.addEventListener('click', () => userDropdown.classList.remove('active'));
+}
+
+// Cambiar contraseña
+const userChangePasswordBtn = document.getElementById('userChangePasswordBtn');
+const changePasswordModal = document.getElementById('changePasswordModal');
+const closePasswordModal = document.getElementById('closePasswordModal');
+
+if (userChangePasswordBtn) {
+    userChangePasswordBtn.onclick = (e) => {
+        e.preventDefault();
+        changePasswordModal.style.display = 'flex';
+        userDropdown.classList.remove('active');
+    };
+}
+if (closePasswordModal) closePasswordModal.onclick = () => changePasswordModal.style.display = 'none';
+window.onclick = (e) => { if (e.target === changePasswordModal) changePasswordModal.style.display = 'none'; };
+
+const changePasswordForm = document.getElementById('changePasswordForm');
+if (changePasswordForm) {
+    changePasswordForm.onsubmit = async function (e) {
+        e.preventDefault();
+        const current = document.getElementById('currentPassword').value;
+        const newPass = document.getElementById('newPassword').value;
+        const confirm = document.getElementById('confirmNewPassword').value;
+
+        if (newPass !== confirm) return showNotification('error', 'Error', 'Las contraseñas nuevas no coinciden');
+        if (newPass.length < 6) return showNotification('error', 'Error', 'La nueva contraseña debe tener al menos 6 caracteres');
+
+        const result = await window.updateUserPassword(current, newPass);
+        if (result.success) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            user.password = newPass;
+            localStorage.setItem('user', JSON.stringify(user));
+            changePasswordModal.style.display = 'none';
+            showNotification('success', 'Contraseña actualizada', 'Tu contraseña ha sido cambiada exitosamente.');
+            changePasswordForm.reset();
+        } else {
+            showNotification('error', 'Error', result.error.message || 'Contraseña actual incorrecta');
+        }
+    };
+}
+
+// Cerrar sesión
+const userLogoutBtn = document.getElementById('userLogoutBtn');
+if (userLogoutBtn) {
+    userLogoutBtn.onclick = (e) => {
+        e.preventDefault();
+        localStorage.removeItem('user');
+        updateUserMenu();
+        showNotification('success', 'Sesión cerrada', 'Has cerrado sesión correctamente.');
+        if (userDropdown) userDropdown.classList.remove('active');
+    };
+}
+
+// ========== NAVBAR SCROLL ==========
+window.addEventListener('scroll', function () {
+    const navbar = document.querySelector('.navbar');
+    if (navbar) window.scrollY > 50 ? navbar.classList.add('scrolled') : navbar.classList.remove('scrolled');
+});
+
+// ========== DARK MODE ==========
+const themeToggle = document.getElementById('themeToggle');
+if (themeToggle) {
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+    themeToggle.onclick = () => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    };
+}
 
 // ========== MENÚ MÓVIL ==========
 const menuToggle = document.getElementById('menuToggle');
 const navMenu = document.querySelector('.nav-menu');
 const navButtons = document.querySelector('.nav-buttons');
-
 if (menuToggle) {
-    menuToggle.addEventListener('click', function () {
-        const isOpen = navMenu && navMenu.style.display === 'flex';
-
+    menuToggle.onclick = () => {
+        const isOpen = navMenu?.style.display === 'flex';
         if (isOpen) {
             if (navMenu) navMenu.style.display = 'none';
             if (navButtons) navButtons.style.display = 'none';
@@ -35,7 +259,6 @@ if (menuToggle) {
                 navMenu.style.right = '0';
                 navMenu.style.backgroundColor = '#FFFFFF';
                 navMenu.style.padding = '20px';
-                navMenu.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
             }
             if (navButtons) {
                 navButtons.style.display = 'flex';
@@ -48,390 +271,24 @@ if (menuToggle) {
                 navButtons.style.padding = '20px';
             }
         }
-    });
+    };
 }
 
 // ========== SMOOTH SCROLL ==========
-document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
     });
 });
 
-// ========== DARK MODE ==========
-const themeToggle = document.getElementById('themeToggle');
-
-if (themeToggle) {
-    const themeIcon = themeToggle.querySelector('i');
-
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-        if (themeIcon) {
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-        }
-    }
-
-    function toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-
-        if (document.body.classList.contains('dark-mode')) {
-            if (themeIcon) {
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            }
-            localStorage.setItem('theme', 'dark');
-        } else {
-            if (themeIcon) {
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-            }
-            localStorage.setItem('theme', 'light');
-        }
-    }
-
-    themeToggle.addEventListener('click', toggleTheme);
-}
-
-// ========== SCROLL ANIMATIONS ==========
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-document.querySelectorAll('.feature-card, .product-card, .pricing-card, .testimonial-card, .demo-content').forEach(function (el) {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'all 0.6s ease-out';
-    observer.observe(el);
-});
-
-// Formulario de contacto
+// ========== CONTACTO ==========
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
-    contactForm.onsubmit = function (e) {
+    contactForm.onsubmit = (e) => {
         e.preventDefault();
         showNotification('success', '¡Mensaje enviado!', 'Gracias por contactarnos. Pronto recibirás respuesta.');
         contactForm.reset();
     };
-}
-
-// // ========== BOTONES LOGIN/REGISTER ==========
-// const loginBtn = document.getElementById('loginBtn');
-// const registerBtn = document.getElementById('registerBtn');
-// const modal = document.getElementById('authModal');
-// const loginForm = document.getElementById('loginForm');
-// const registerForm = document.getElementById('registerForm');
-
-// if (loginBtn) {
-//     loginBtn.addEventListener('click', function (e) {
-//         e.preventDefault();
-//         if (modal) {
-//             loginForm.style.display = 'block';
-//             registerForm.style.display = 'none';
-//             modal.classList.add('active');
-//         } else {
-//             alert('🔐 Acceso a la plataforma\n\nActualmente en desarrollo. Pronto estará disponible.');
-//         }
-//     });
-// }
-
-// if (registerBtn) {
-//     registerBtn.addEventListener('click', function (e) {
-//         e.preventDefault();
-//         if (modal) {
-//             loginForm.style.display = 'none';
-//             registerForm.style.display = 'block';
-//             modal.classList.add('active');
-//         } else {
-//             alert('📝 Registro de nueva cuenta\n\nActualmente en desarrollo. Pronto estará disponible.');
-//         }
-//     });
-// }
-
-// ========== MODAL DE NOTIFICACIÓN ==========
-function showNotification(type, title, message, details = null, redirectUrl = null) {
-    const modal = document.getElementById('notificationModal');
-    const icon = document.getElementById('notificationIcon');
-    const titleEl = document.getElementById('notificationTitle');
-    const messageEl = document.getElementById('notificationMessage');
-    const detailsEl = document.getElementById('notificationDetails');
-    const btn = document.getElementById('notificationBtn');
-
-    // Configurar icono y color según tipo
-    icon.className = 'notification-icon ' + type;
-    switch (type) {
-        case 'success':
-            icon.innerHTML = '<i class="fas fa-check-circle"></i>';
-            break;
-        case 'error':
-            icon.innerHTML = '<i class="fas fa-times-circle"></i>';
-            break;
-        case 'warning':
-            icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
-            break;
-        case 'info':
-            icon.innerHTML = '<i class="fas fa-info-circle"></i>';
-            break;
-    }
-
-    titleEl.textContent = title;
-    messageEl.textContent = message;
-
-    if (details) {
-        detailsEl.style.display = 'block';
-        detailsEl.innerHTML = details;
-    } else {
-        detailsEl.style.display = 'none';
-    }
-
-    modal.classList.add('active');
-
-    // Configurar botón
-    btn.onclick = function () {
-        modal.classList.remove('active');
-        if (redirectUrl) {
-            window.location.href = redirectUrl;
-        }
-    };
-
-    // Cerrar al hacer clic fuera
-    modal.onclick = function (e) {
-        if (e.target === modal) {
-            modal.classList.remove('active');
-            if (redirectUrl) {
-                window.location.href = redirectUrl;
-            }
-        }
-    };
-}
-
-// ========== MODAL LOGIN/REGISTRO ==========
-const closeModal = document.getElementById('closeModal');
-const showRegister = document.getElementById('showRegister');
-const showLogin = document.getElementById('showLogin');
-
-// Abrir modal
-if (loginBtn) {
-    loginBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        loginForm.style.display = 'block';
-        registerForm.style.display = 'none';
-        modal.classList.add('active');
-    });
-}
-
-if (registerBtn) {
-    registerBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        loginForm.style.display = 'none';
-        registerForm.style.display = 'block';
-        modal.classList.add('active');
-    });
-}
-
-// Cerrar modal
-if (closeModal) {
-    closeModal.addEventListener('click', () => {
-        modal.classList.remove('active');
-    });
-}
-
-// Cambiar entre login y registro
-if (showRegister) {
-    showRegister.addEventListener('click', () => {
-        loginForm.style.display = 'none';
-        registerForm.style.display = 'block';
-    });
-}
-
-if (showLogin) {
-    showLogin.addEventListener('click', () => {
-        loginForm.style.display = 'block';
-        registerForm.style.display = 'none';
-    });
-}
-
-// Cerrar modal al hacer clic fuera
-window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        modal.classList.remove('active');
-    }
-});
-
-// Selección de plan
-const planOptions = document.querySelectorAll('.plan-option');
-let selectedPlan = 'helpdesk_basic';
-
-planOptions.forEach(option => {
-    option.addEventListener('click', () => {
-        planOptions.forEach(opt => opt.classList.remove('selected'));
-        option.classList.add('selected');
-        selectedPlan = option.dataset.plan;
-    });
-});
-
-// Procesar registro con email
-const registerSubmit = document.getElementById('registerSubmit');
-if (registerSubmit) {
-    registerSubmit.onsubmit = function (e) {
-        e.preventDefault();
-        const name = document.getElementById('regName').value;
-        const email = document.getElementById('regEmail').value;
-        const password = document.getElementById('regPassword').value;
-        const confirm = document.getElementById('regConfirmPassword').value;
-
-        if (password !== confirm) {
-            showNotification('error', 'Error', 'Las contraseñas no coinciden');
-            return;
-        }
-
-        if (password.length < 6) {
-            showNotification('error', 'Error', 'La contraseña debe tener al menos 6 caracteres');
-            return;
-        }
-
-        const details = `
-            <strong>👤 Nombre:</strong> ${name}<br>
-            <strong>📧 Email:</strong> ${email}<br>
-            <strong>📅 Fecha:</strong> ${new Date().toLocaleDateString()}
-        `;
-
-        showNotification(
-            'success',
-            '¡Registro exitoso!',
-            'Tu cuenta ha sido creada correctamente.',
-            details,
-            'https://app.arbesa.com/dashboard'
-        );
-
-        document.getElementById('authModal').style.display = 'none';
-        document.getElementById('registerForm').reset();
-    };
-}
-
-// Procesar login con email
-const loginSubmit = document.getElementById('loginSubmit');
-if (loginSubmit) {
-    loginSubmit.onsubmit = function (e) {
-        e.preventDefault();
-        const email = document.getElementById('loginEmail').value;
-
-        showNotification(
-            'success',
-            '¡Sesión iniciada!',
-            `Bienvenido de nuevo, ${email}`,
-            null,
-            'https://app.arbesa.com/dashboard'
-        );
-
-        document.getElementById('authModal').style.display = 'none';
-        document.getElementById('loginForm').reset();
-    };
-}
-
-function openRegisterModal() {
-    loginForm.style.display = 'none';
-    registerForm.style.display = 'block';
-    modal.classList.add('active');
-}
-
-window.loginWithGoogle = async function () {
-    try {
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-
-        const details = `
-            <strong>👤 Nombre:</strong> ${user.displayName}<br>
-            <strong>📧 Email:</strong> ${user.email}<br>
-            <strong>🆔 UID:</strong> ${user.uid.substring(0, 15)}...
-        `;
-
-        showNotification(
-            'success',
-            '¡Bienvenido!',
-            `Hola ${user.displayName}, has iniciado sesión correctamente.`,
-            details,
-            'https://app.arbesa.com/dashboard'
-        );
-
-        localStorage.setItem('user', JSON.stringify({
-            name: user.displayName,
-            email: user.email,
-            uid: user.uid
-        }));
-
-        document.getElementById('authModal').style.display = 'none';
-
-    } catch (error) {
-        console.error(error);
-        showNotification('error', 'Error de autenticación', error.message);
-    }
-};
-
-// Si hay errores de validación
-if (!_isFormValid) {
-    showNotification('error', 'Formulario incompleto', 'Por favor completa todos los campos requeridos.');
-    return;
-}
-
-// Verificar si está logueado antes de comprar
-window.checkAndBuy = function (event, planName, planPrice, productType) {
-    event.preventDefault();
-
-    const user = localStorage.getItem('user');
-    const isLoggedIn = user && JSON.parse(user).email;
-
-    if (!isLoggedIn) {
-        // Mostrar modal de login/registro
-        const modal = document.getElementById('authModal');
-        const loginForm = document.getElementById('loginForm');
-        const registerForm = document.getElementById('registerForm');
-        if (modal) {
-            loginForm.style.display = 'block';
-            registerForm.style.display = 'none';
-            modal.style.display = 'flex';
-
-            // Guardar plan seleccionado para después de login
-            localStorage.setItem('pendingPlan', JSON.stringify({
-                name: planName,
-                price: planPrice,
-                type: productType
-            }));
-        }
-    } else {
-        // Redirigir a checkout
-        window.location.href = `checkout.html?plan=${encodeURIComponent(planName)}&price=${planPrice}&type=${productType}`;
-    }
-};
-
-// Después de login exitoso
-if (success && mounted) {
-    const pendingPlan = localStorage.getItem('pendingPlan');
-    if (pendingPlan) {
-        const plan = JSON.parse(pendingPlan);
-        localStorage.removeItem('pendingPlan');
-        window.location.href = `checkout.html?plan=${encodeURIComponent(plan.name)}&price=${plan.price}&type=${plan.type}`;
-    } else {
-        // Redirigir a dashboard o cerrar modal
-        document.getElementById('authModal').style.display = 'none';
-        showNotification('success', '¡Bienvenido!', 'Has iniciado sesión correctamente.');
-    }
 }
