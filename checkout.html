@@ -153,7 +153,6 @@
     </div>
 
     <script>
-        // Obtener datos del plan de la URL
         const urlParams = new URLSearchParams(window.location.search);
         const planName = urlParams.get('plan');
         const planPrice = urlParams.get('price');
@@ -163,46 +162,19 @@
         if (planName && planPrice && planSummary) {
             planSummary.innerHTML = `
                 <div class="plan-name">${decodeURIComponent(planName)}</div>
-                <div class="plan-price">$${planPrice} <span style="font-size: 14px;">/mes</span></div>
-                <p style="color: var(--text-light); margin-top: 10px;">Producto: ${productType === 'helpdesk' ? 'ARBESA Help Desk' : 'ARBESA VitaStock'}</p>
+                <div class="plan-price">$${planPrice} /mes</div>
+                <p>Producto: ${productType === 'helpdesk' ? 'ARBESA Help Desk' : 'ARBESA VitaStock'}</p>
             `;
         }
 
-        // Formatear número de tarjeta
-        const cardNumberInput = document.getElementById('cardNumber');
-        if (cardNumberInput) {
-            cardNumberInput.addEventListener('input', function (e) {
-                let value = e.target.value.replace(/\D/g, '');
-                value = value.replace(/(\d{4})/g, '$1 ').trim();
-                e.target.value = value.substring(0, 19);
-            });
-        }
-
-        // Formatear fecha de expiración
-        const cardExpiryInput = document.getElementById('cardExpiry');
-        if (cardExpiryInput) {
-            cardExpiryInput.addEventListener('input', function (e) {
-                let value = e.target.value.replace(/\D/g, '');
-                if (value.length >= 2) {
-                    value = value.substring(0, 2) + '/' + value.substring(2, 4);
-                }
-                e.target.value = value.substring(0, 5);
-            });
-        }
-
-        // Procesar pago
         const paymentForm = document.getElementById('paymentForm');
         if (paymentForm) {
             paymentForm.addEventListener('submit', function (e) {
                 e.preventDefault();
 
                 const cardName = document.getElementById('cardName').value;
-                const cardNumber = document.getElementById('cardNumber').value;
-                const cardExpiry = document.getElementById('cardExpiry').value;
-                const cardCvv = document.getElementById('cardCvv').value;
-
-                if (!cardName || !cardNumber || !cardExpiry || !cardCvv) {
-                    alert('Por favor completa todos los campos');
+                if (!cardName) {
+                    alert('Completa todos los campos');
                     return;
                 }
 
@@ -234,7 +206,6 @@
             });
         }
 
-        // Dark mode
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
         }

@@ -135,21 +135,21 @@
             <p style="color: var(--text-light);">Gracias por confiar en ARBESA SYSTEMS</p>
 
             <div class="credentials-box">
-                <h3 style="margin-bottom: 15px; text-align: center;">📋 Tus credenciales de acceso</h3>
+                <h3 style="margin-bottom: 15px; text-align: center;">📋 Tus credenciales</h3>
                 <div id="credentialsContainer"></div>
             </div>
 
             <div class="instruction-box">
                 <h4><i class="fas fa-info-circle"></i> Instrucciones</h4>
                 <ul>
-                    <li><i class="fas fa-globe"></i> Accede usando: <strong>https://app.arbesa.com</strong></li>
-                    <li><i class="fas fa-envelope"></i> Usa el correo y contraseña proporcionados</li>
-                    <li><i class="fas fa-headset"></i> Soporte: +52 238 195 1301 (WhatsApp)</li>
+                    <li>Accede a tu cuenta en: <strong>https://app.arbesa.com</strong></li>
+                    <li>Usa el correo y contraseña proporcionados</li>
+                    <li>Soporte: +52 238 195 1301 (WhatsApp)</li>
                 </ul>
             </div>
 
-            <a href="https://app.arbesa.com" class="btn-go" id="goToAppBtn">
-                <i class="fas fa-rocket"></i> Ir a la plataforma
+            <a href="index.html" class="btn-go">
+                <i class="fas fa-home"></i> Volver al inicio
             </a>
         </div>
     </div>
@@ -160,52 +160,30 @@
         const userEmail = decodeURIComponent(urlParams.get('email') || '');
         const planName = decodeURIComponent(urlParams.get('plan') || 'Plan');
         const planPrice = urlParams.get('price');
-        const productType = urlParams.get('type');
         const transactionId = urlParams.get('transactionId');
 
         const generatedPassword = Math.random().toString(36).substring(2, 10);
-        const username = userEmail.split('@')[0] + Math.floor(Math.random() * 1000);
-
-        let productUrl = 'https://app.arbesa.com';
-        let productName = 'ARBESA SYSTEMS';
-        if (productType === 'helpdesk') {
-            productUrl = 'https://helpdesk.arbesa.com';
-            productName = 'ARBESA Help Desk';
-        } else if (productType === 'vitastock') {
-            productUrl = 'https://vitastock.arbesa.com';
-            productName = 'ARBESA VitaStock';
-        }
 
         const credentialsContainer = document.getElementById('credentialsContainer');
         if (credentialsContainer) {
             credentialsContainer.innerHTML = `
                 <div class="credential-row">
-                    <span class="credential-label">📧 Usuario / Email:</span>
-                    <span class="credential-value">${userEmail || username + '@arbesa.com'}</span>
+                    <span class="credential-label">Usuario / Email:</span>
+                    <span class="credential-value">${userEmail || 'usuario@arbesa.com'}</span>
                 </div>
                 <div class="credential-row">
-                    <span class="credential-label">🔑 Contraseña:</span>
+                    <span class="credential-label">Contraseña:</span>
                     <span class="credential-value">${generatedPassword}</span>
                 </div>
                 <div class="credential-row">
-                    <span class="credential-label">📦 Plan contratado:</span>
+                    <span class="credential-label">Plan contratado:</span>
                     <span class="credential-value">${planName} - $${planPrice}/mes</span>
                 </div>
                 <div class="credential-row">
-                    <span class="credential-label">🆔 ID de transacción:</span>
+                    <span class="credential-label">ID Transacción:</span>
                     <span class="credential-value">${transactionId}</span>
                 </div>
-                <div class="credential-row">
-                    <span class="credential-label">📅 Fecha de activación:</span>
-                    <span class="credential-value">${new Date().toLocaleDateString()}</span>
-                </div>
             `;
-        }
-
-        const goToAppBtn = document.getElementById('goToAppBtn');
-        if (goToAppBtn) {
-            goToAppBtn.href = productUrl;
-            goToAppBtn.innerHTML = `<i class="fas fa-rocket"></i> Ir a ${productName}`;
         }
 
         if (localStorage.getItem('theme') === 'dark') {
