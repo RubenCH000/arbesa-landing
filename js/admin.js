@@ -273,3 +273,76 @@ if (document.getElementById('plansChart')) {
         }
     });
 }
+
+// ========== VARIABLES GLOBALES PARA GRÁFICAS ==========
+let salesChart = null;
+let plansChart = null;
+
+// ========== FUNCIÓN PARA CREAR/DESTRUIR GRÁFICAS ==========
+function initCharts() {
+    // Destruir gráficas existentes si ya existen
+    if (salesChart) {
+        salesChart.destroy();
+    }
+    if (plansChart) {
+        plansChart.destroy();
+    }
+
+    // Gráfica de ventas por mes
+    const salesCtx = document.getElementById('salesChart')?.getContext('2d');
+    if (salesCtx) {
+        salesChart = new Chart(salesCtx, {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Ventas ($)',
+                    data: [29, 79, 199, 49, 99, 29],
+                    borderColor: '#49B8B0',
+                    backgroundColor: 'rgba(73, 184, 176, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+    }
+
+    // Gráfica de planes más vendidos
+    const plansCtx = document.getElementById('plansChart')?.getContext('2d');
+    if (plansCtx) {
+        plansChart = new Chart(plansCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Básico', 'Profesional', 'Empresarial'],
+                datasets: [{
+                    data: [12, 8, 5],
+                    backgroundColor: ['#49B8B0', '#2B9B93', '#1a6b65'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+    }
+}
+
+// ========== INICIALIZACIÓN ==========
+document.addEventListener('DOMContentLoaded', function () {
+    renderDashboard();
+    renderEmpresas();
+    renderUsuarios();
+    renderVentas();
+    initCharts();  // ← Inicializar gráficas solo una vez
+});
