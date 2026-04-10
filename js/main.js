@@ -49,15 +49,36 @@ function updateUserMenu() {
 // ========== CHECK AND BUY ==========
 window.checkAndBuy = function (event, planName, planPrice, productType) {
     event.preventDefault();
+    console.log('🟢 Botón Comprar clickeado:', { planName, planPrice, productType });
+
     const user = localStorage.getItem('user');
+    console.log('👤 Usuario logueado:', user);
+
     if (!user) {
-        localStorage.setItem('pendingPlan', JSON.stringify({ name: planName, price: planPrice, type: productType }));
+        // Guardar plan pendiente
+        const pendingPlan = { name: planName, price: planPrice, type: productType };
+        localStorage.setItem('pendingPlan', JSON.stringify(pendingPlan));
+        console.log('📦 Plan guardado en pendingPlan:', pendingPlan);
+
+        // Abrir modal de registro
         const modal = document.getElementById('authModal');
-        document.getElementById('loginForm').style.display = 'none';
-        document.getElementById('registerForm').style.display = 'block';
-        modal.style.display = 'flex';
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+
+        if (modal) {
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'block';
+            modal.style.display = 'flex';
+            console.log('✅ Modal de registro abierto');
+        } else {
+            console.error('❌ Modal no encontrado');
+            alert('Por favor inicia sesión o regístrate primero');
+        }
     } else {
-        window.location.href = `checkout.html?plan=${encodeURIComponent(planName)}&price=${planPrice}&type=${productType}`;
+        // Redirigir a checkout
+        const url = `checkout.html?plan=${encodeURIComponent(planName)}&price=${planPrice}&type=${productType}`;
+        console.log('🔄 Redirigiendo a:', url);
+        window.location.href = url;
     }
 };
 
@@ -87,27 +108,45 @@ const registerSubmit = document.getElementById('registerSubmit');
 if (registerSubmit) {
     registerSubmit.onsubmit = async function (e) {
         e.preventDefault();
+
         const name = document.getElementById('regName').value;
         const email = document.getElementById('regEmail').value;
         const password = document.getElementById('regPassword').value;
         const confirm = document.getElementById('regConfirmPassword').value;
 
-        if (password !== confirm) return showNotification('error', 'Error', 'Las contraseñas no coinciden');
-        if (password.length < 6) return showNotification('error', 'Error', 'La contraseña debe tener al menos 6 caracteres');
+        if (password !== confirm) {
+            showNotification('error', 'Error', 'Las contraseñas no coinciden');
+            return;
+        }
+        if (password.length < 6) {
+            showNotification('error', 'Error', 'La contraseña debe tener al menos 6 caracteres');
+            return;
+        }
+
+        // Verificar plan pendiente ANTES de registrar
+        const pendingPlan = localStorage.getItem('pendingPlan');
+        console.log('📦 Plan pendiente antes de registrar:', pendingPlan);
 
         const result = await window.createUserWithEmail(email, password, name);
+
         if (result.success) {
+            // Guardar usuario
             localStorage.setItem('user', JSON.stringify({ name: name, email: email, uid: result.user.uid }));
             updateUserMenu();
-            const pendingPlan = localStorage.getItem('pendingPlan');
-            if (pendingPlan) {
-                const plan = JSON.parse(pendingPlan);
+
+            // Verificar plan pendiente DESPUÉS de registrar
+            const pendingPlanAfter = localStorage.getItem('pendingPlan');
+            console.log('📦 Plan pendiente después de registrar:', pendingPlanAfter);
+
+            if (pendingPlanAfter) {
+                const plan = JSON.parse(pendingPlanAfter);
                 localStorage.removeItem('pendingPlan');
                 document.getElementById('authModal').style.display = 'none';
+                console.log('🔄 Redirigiendo a checkout con plan:', plan);
                 window.location.href = `checkout.html?plan=${encodeURIComponent(plan.name)}&price=${plan.price}&type=${plan.type}`;
             } else {
                 document.getElementById('authModal').style.display = 'none';
-                showNotification('success', '¡Registro exitoso!', `Bienvenido ${name}, tu cuenta ha sido creada en Firebase.`);
+                showNotification('success', '¡Registro exitoso!', `Bienvenido ${name}`);
             }
             document.getElementById('registerForm').reset();
         } else {
@@ -125,21 +164,30 @@ const loginSubmit = document.getElementById('loginSubmit');
 if (loginSubmit) {
     loginSubmit.onsubmit = async function (e) {
         e.preventDefault();
+
         const email = document.getElementById('loginEmail').value;
         const password = document.getElementById('loginPassword').value;
 
+        // Verificar plan pendiente ANTES de login
+        const pendingPlan = localStorage.getItem('pendingPlan');
+        console.log('📦 Plan pendiente antes de login:', pendingPlan);
+
         const result = await window.signInWithEmail(email, password);
+
         if (result.success) {
             let userName = email.split('@')[0];
-            const localUser = localStorage.getItem('user');
-            if (localUser) userName = JSON.parse(localUser).name || userName;
             localStorage.setItem('user', JSON.stringify({ name: userName, email: email, uid: result.user.uid }));
             updateUserMenu();
-            const pendingPlan = localStorage.getItem('pendingPlan');
-            if (pendingPlan) {
-                const plan = JSON.parse(pendingPlan);
+
+            // Verificar plan pendiente DESPUÉS de login
+            const pendingPlanAfter = localStorage.getItem('pendingPlan');
+            console.log('📦 Plan pendiente después de login:', pendingPlanAfter);
+
+            if (pendingPlanAfter) {
+                const plan = JSON.parse(pendingPlanAfter);
                 localStorage.removeItem('pendingPlan');
                 document.getElementById('authModal').style.display = 'none';
+                console.log('🔄 Redirigiendo a checkout con plan:', plan);
                 window.location.href = `checkout.html?plan=${encodeURIComponent(plan.name)}&price=${plan.price}&type=${plan.type}`;
             } else {
                 document.getElementById('authModal').style.display = 'none';
