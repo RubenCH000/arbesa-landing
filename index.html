@@ -13,6 +13,13 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-icon-180x180.png">
     <meta name="theme-color" content="#49B8B0">
 
+
+    <!-- Logos -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/logo-light.png"
+        media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/logo-dark.png"
+        media="(prefers-color-scheme: dark)">
+
     <!-- Google Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
@@ -905,6 +912,243 @@
 
             .pricing-card {
                 padding: 30px 20px;
+            }
+        }
+
+        /* ========== ANIMACIONES ========== */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .float-card {
+            position: absolute;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .float-card i {
+            font-size: 24px;
+            color: var(--cyan-turquoise);
+        }
+
+        .float-card span {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .card-1 {
+            top: 20%;
+            left: 0;
+            animation-delay: 0s;
+        }
+
+        .card-2 {
+            top: 50%;
+            right: 0;
+            animation-delay: 1s;
+        }
+
+        .card-3 {
+            bottom: 20%;
+            left: 10%;
+            animation-delay: 2s;
+        }
+
+        .card-4 {
+            top: 30%;
+            right: 10%;
+            animation-delay: 0.5s;
+        }
+
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--green-mint);
+            top: 10%;
+            right: 0;
+        }
+
+        .orb-2 {
+            width: 200px;
+            height: 200px;
+            background: var(--cyan-turquoise);
+            bottom: 0;
+            left: 20%;
+        }
+
+        /* Animación de entrada al hacer scroll */
+        .feature-card,
+        .product-card,
+        .pricing-card,
+        .testimonial-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .feature-card.visible,
+        .product-card.visible,
+        .pricing-card.visible,
+        .testimonial-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Dashboard preview */
+        .dashboard-preview {
+            background: var(--gray-light);
+            border-radius: 20px;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .dashboard-preview i {
+            font-size: 48px;
+            color: var(--cyan-turquoise);
+            transition: transform 0.3s;
+        }
+
+        .dashboard-preview i:hover {
+            transform: scale(1.1);
+        }
+
+        /* Mockup window */
+        .mockup-window {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .mockup-bar {
+            background: var(--gray-light);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--gray-mid);
+        }
+
+        .mockup-title {
+            margin-left: 8px;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .mockup-content {
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            background: var(--white);
+        }
+
+        .mockup-content i {
+            font-size: 48px;
+            color: var(--cyan-turquoise);
+            opacity: 0.7;
+        }
+
+        .demo-section {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .demo-section.alt {
+            background: var(--gray-light);
+        }
+
+        .demo-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .demo-content.reverse {
+            direction: rtl;
+        }
+
+        .demo-content.reverse>* {
+            direction: ltr;
+        }
+
+        .demo-badge {
+            display: inline-block;
+            background: rgba(73, 184, 176, 0.1);
+            color: var(--cyan-turquoise);
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .demo-text h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .demo-text p {
+            color: var(--text-light);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .demo-list {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .demo-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-dark);
+        }
+
+        .demo-list i {
+            color: var(--cyan-turquoise);
+            font-size: 18px;
+        }
+
+        @media (max-width: 968px) {
+
+            .float-card,
+            .gradient-orb {
+                display: none;
+            }
+
+            .demo-content {
+                grid-template-columns: 1fr;
             }
         }
     </style>
