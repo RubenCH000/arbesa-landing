@@ -451,10 +451,16 @@
                         <h4>WhatsApp</h4>
                         <p>+52 238 195 1301</p>
                     </div>
-                    <div class="contact-card"><i class="fab fa-facebook"></i>
+                    <div class="contact-card"><i class="fas fa-users"></i>
                         <h4>Redes Sociales</h4>
-                        <div class="social-contact"><a href="#"><i class="fab fa-facebook"></i> Facebook</a><a
-                                href="#"><i class="fab fa-instagram"></i> Instagram</a></div>
+                        <div class="social-contact">
+                            <a href="https://wa.me/522381218812?text=Hola%2C%20vengo%20de%20ARBESA%20SYSTEMS%20y%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n"
+                                target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                            <a href="https://www.instagram.com/arbesasystems" target="_blank"
+                                rel="noopener noreferrer"><i class="fab fa-instagram"></i> Instagram</a>
+                        </div>
                     </div>
                 </div>
                 <div class="contact-form">
@@ -504,8 +510,15 @@
                 </div>
                 <div class="footer-social">
                     <h4>Síguenos</h4>
-                    <div class="social-icons"><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i
-                                class="fab fa-instagram"></i></a></div>
+                    <div class="social-icons">
+                        <a href="https://wa.me/522381218812?text=Hola%2C%20vengo%20de%20ARBESA%20SYSTEMS%20y%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n"
+                            target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/arbesasystems" target="_blank" rel="noopener noreferrer"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/@arbesasystems" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-youtube"></i></a>
+                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -906,25 +919,51 @@
         // ========== DARK MODE ==========
         const themeToggle = document.getElementById('themeToggle');
         if (themeToggle) {
+            // Cargar tema guardado
             if (localStorage.getItem('theme') === 'dark') {
                 document.body.classList.add('dark-mode');
                 themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
             }
-            themeToggle.onclick = () => {
+
+            themeToggle.onclick = function () {
                 document.body.classList.toggle('dark-mode');
                 const isDark = document.body.classList.contains('dark-mode');
                 themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
                 localStorage.setItem('theme', isDark ? 'dark' : 'light');
+
+                // ACTUALIZAR MENÚ MÓVIL SI ESTÁ ABIERTO
+                const navMenu = document.querySelector('.nav-menu');
+                const navButtons = document.querySelector('.nav-buttons');
+                const isMenuOpen = navMenu && navMenu.style.display === 'flex';
+
+                if (isMenuOpen) {
+                    const bgColor = isDark ? '#1a1a2e' : '#FFFFFF';
+                    if (navMenu) navMenu.style.backgroundColor = bgColor;
+                    if (navButtons) navButtons.style.backgroundColor = bgColor;
+
+                    // También actualizar los links si es necesario
+                    const navLinks = document.querySelectorAll('.nav-menu .nav-link');
+                    navLinks.forEach(link => {
+                        link.style.color = isDark ? '#e2e8f0' : '#1F2937';
+                    });
+                }
             };
         }
 
-        // ========== MENÚ MÓVIL ==========
+        // ========== MENÚ MÓVIL (CON SOPORTE PARA TEMA OSCURO) ==========
         const menuToggle = document.getElementById('menuToggle');
         const navMenu = document.querySelector('.nav-menu');
         const navButtons = document.querySelector('.nav-buttons');
+
+        function getCurrentThemeBackground() {
+            return document.body.classList.contains('dark-mode') ? '#1a1a2e' : '#FFFFFF';
+        }
+
         if (menuToggle) {
-            menuToggle.onclick = () => {
-                const isOpen = navMenu?.style.display === 'flex';
+            menuToggle.onclick = function () {
+                const isOpen = navMenu && navMenu.style.display === 'flex';
+                const bgColor = getCurrentThemeBackground();
+
                 if (isOpen) {
                     if (navMenu) navMenu.style.display = 'none';
                     if (navButtons) navButtons.style.display = 'none';
@@ -936,8 +975,10 @@
                         navMenu.style.top = '70px';
                         navMenu.style.left = '0';
                         navMenu.style.right = '0';
-                        navMenu.style.backgroundColor = '#FFFFFF';
+                        navMenu.style.backgroundColor = bgColor;
                         navMenu.style.padding = '20px';
+                        navMenu.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+                        navMenu.style.zIndex = '999';
                     }
                     if (navButtons) {
                         navButtons.style.display = 'flex';
@@ -946,8 +987,9 @@
                         navButtons.style.top = '300px';
                         navButtons.style.left = '0';
                         navButtons.style.right = '0';
-                        navButtons.style.backgroundColor = '#FFFFFF';
+                        navButtons.style.backgroundColor = bgColor;
                         navButtons.style.padding = '20px';
+                        navButtons.style.zIndex = '999';
                     }
                 }
             };

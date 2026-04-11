@@ -160,29 +160,77 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+        import { getAuth } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyB8CTljs84r5ImivVrSaAeITcs2jWRFDCM",
+            authDomain: "arbesa-landing.firebaseapp.com",
+            projectId: "arbesa-landing",
+            storageBucket: "arbesa-landing.firebasestorage.app",
+            messagingSenderId: "752993027681",
+            appId: "1:752993027681:web:0ad57cefc7ed9a97388c20"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // Obtener datos del plan de la URL
         const urlParams = new URLSearchParams(window.location.search);
         const planName = urlParams.get('plan');
         const planPrice = urlParams.get('price');
         const productType = urlParams.get('type');
 
+        // Mostrar resumen del plan
         const planSummary = document.getElementById('planSummary');
         if (planName && planPrice && planSummary) {
             planSummary.innerHTML = `
                 <div class="plan-name">${decodeURIComponent(planName)}</div>
-                <div class="plan-price">$${planPrice} /mes</div>
-                <p>Producto: ${productType === 'helpdesk' ? 'ARBESA Help Desk' : 'ARBESA VitaStock'}</p>
+                <div class="plan-price">$${planPrice} <span style="font-size: 14px;">/mes</span></div>
+                <p style="color: var(--text-light); margin-top: 10px;">Producto: ${productType === 'helpdesk' ? 'ARBESA Help Desk' : 'ARBESA VitaStock'}</p>
             `;
         }
 
+        // Formatear número de tarjeta
+        const cardNumberInput = document.getElementById('cardNumber');
+        if (cardNumberInput) {
+            cardNumberInput.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = value.replace(/(\d{4})/g, '$1 ').trim();
+                e.target.value = value.substring(0, 19);
+            });
+        }
+
+        // Formatear fecha de expiración
+        const cardExpiryInput = document.getElementById('cardExpiry');
+        if (cardExpiryInput) {
+            cardExpiryInput.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length >= 2) {
+                    value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                }
+                e.target.value = value.substring(0, 5);
+            });
+        }
+
+        // Procesar pago y guardar en Firestore
         const paymentForm = document.getElementById('paymentForm');
         if (paymentForm) {
-            paymentForm.addEventListener('submit', function (e) {
+            paymentForm.addEventListener('submit', async function (e) {
                 e.preventDefault();
 
                 const cardName = document.getElementById('cardName').value;
-                if (!cardName) {
-                    alert('Completa todos los campos');
+                const cardNumber = document.getElementById('cardNumber').value;
+                const cardExpiry = document.getElementById('cardExpiry').value;
+                const cardCvv = document.getElementById('cardCvv').value;
+
+                if (!cardName || !cardNumber || !cardExpiry || !cardCvv) {
+                    alert('Por favor completa todos los campos');
                     return;
                 }
 
@@ -190,30 +238,65 @@
                 payBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
                 payBtn.disabled = true;
 
-                setTimeout(() => {
-                    const user = localStorage.getItem('user');
-                    let userName = 'Cliente';
-                    let userEmail = '';
-                    if (user) {
-                        const userData = JSON.parse(user);
-                        userName = userData.name || 'Cliente';
-                        userEmail = userData.email || '';
-                    }
+                // Obtener usuario actual
+                const user = localStorage.getItem('user');
+                let userName = 'Cliente';
+                let userEmail = '';
+                let userUid = '';
 
+                if (user) {
+                    const userData = JSON.parse(user);
+                    userName = userData.name || 'Cliente';
+                    userEmail = userData.email || '';
+                    userUid = userData.uid || '';
+                }
+
+                try {
+                    // Guardar venta en Firestore
+                    const ventaData = {
+                        cliente: userName,
+                        email: userEmail,
+                        uid: userUid,
+                        plan: decodeURIComponent(planName),
+                        monto: parseInt(planPrice),
+                        tipo: productType,
+                        fecha: new Date().toISOString(),
+                        fechaFormateada: new Date().toLocaleDateString('es-MX'),
+                        estado: 'completado',
+                        timestamp: serverTimestamp(),
+                        transaccionId: 'TRX-' + Math.random().toString(36).substring(2, 10).toUpperCase()
+                    };
+
+                    const docRef = await addDoc(collection(db, 'ventas'), ventaData);
+                    console.log('✅ Venta guardada en Firestore con ID:', docRef.id);
+
+                    // Guardar también en localStorage
+                    const ventasGuardadas = JSON.parse(localStorage.getItem('ventas') || '[]');
+                    ventasGuardadas.push({ id: docRef.id, ...ventaData });
+                    localStorage.setItem('ventas', JSON.stringify(ventasGuardadas));
+
+                    // Redirigir a confirmación
                     const params = new URLSearchParams({
                         name: userName,
                         email: userEmail,
                         plan: planName,
                         price: planPrice,
                         type: productType,
-                        transactionId: 'TRX-' + Math.random().toString(36).substring(2, 10).toUpperCase()
+                        transactionId: docRef.id
                     });
 
                     window.location.href = 'confirmation.html?' + params.toString();
-                }, 1500);
+
+                } catch (error) {
+                    console.error('❌ Error al guardar venta:', error);
+                    alert('Error al procesar el pago. Intenta de nuevo.');
+                    payBtn.innerHTML = '<i class="fas fa-lock"></i> Pagar ahora';
+                    payBtn.disabled = false;
+                }
             });
         }
 
+        // Dark mode
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
         }

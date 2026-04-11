@@ -1776,3 +1776,96 @@ body.dark-mode .vitastock-pricing {
         display: none;
     }
 }
+
+/* ========== MENÚ MÓVIL MODO OSCURO ========== */
+body.dark-mode .nav-menu,
+body.dark-mode .nav-buttons {
+    background-color: #1a1a2e;
+}
+
+body.dark-mode .nav-menu .nav-link {
+    color: #e2e8f0;
+}
+
+body.dark-mode .nav-menu .nav-link:hover {
+    color: var(--cyan-turquoise);
+}
+
+body.dark-mode .nav-buttons .btn-outline {
+    color: #e2e8f0;
+    border-color: var(--cyan-turquoise);
+}
+
+body.dark-mode .nav-buttons .btn-outline:hover {
+    background: var(--cyan-turquoise);
+    color: white;
+}
+
+/* Asegurar que el menú móvil tenga el fondo correcto */
+@media (max-width: 768px) {
+
+    .nav-menu,
+    .nav-buttons {
+        transition: background-color 0.3s ease;
+    }
+}
+
+@media (max-width: 768px) {
+    .floating-elements {
+        position: relative;
+        height: 80px;
+        margin-top: 20px;
+    }
+
+    .float-card {
+        position: absolute;
+        padding: 6px 12px;
+        font-size: 10px;
+        transform: scale(0.7);
+    }
+
+    .float-card i {
+        font-size: 14px;
+    }
+
+    .float-card span {
+        font-size: 10px;
+    }
+
+    .card-1 {
+        top: 0;
+        left: 5%;
+    }
+
+    .card-2 {
+        top: 0;
+        right: 5%;
+    }
+
+    .card-3 {
+        top: 20px;
+        left: 20%;
+    }
+
+    .card-4 {
+        top: 20px;
+        right: 20%;
+    }
+
+    .gradient-orb {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-image {
+        display: none;
+        /* Oculta completamente la imagen en móvil */
+    }
+
+    /* O si quieres mantenerla más pequeña */
+    .hero-image {
+        transform: scale(0.8);
+        margin-top: 20px;
+    }
+}
